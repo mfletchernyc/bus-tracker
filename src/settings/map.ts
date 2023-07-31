@@ -1,7 +1,7 @@
 import { LatLngTuple } from 'leaflet'
 
 const center: LatLngTuple = [40.73, -73.951]
-const zoom = 15
+const zoom = 14
 
 const mapboxAPI = 'https://api.mapbox.com/styles/v1/'
 const mapboxTiles = {

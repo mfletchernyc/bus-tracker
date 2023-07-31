@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Pragati+Narrow:wght@400;700&display=swap');
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  align-items: center;
+  background-color: #222;
+  color: #ccc;
+  display: flex;
+  font-family: 'Pragati Narrow', sans-serif;
+  font-synthesis: none;
+  height: 100%;
+  justify-content: center;
+  text-rendering: optimizeLegibility;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}

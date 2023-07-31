@@ -1,0 +1,31 @@
+/* Styling third-party things. */
+
+#root .leaflet-container {
+  background: #13151a;
+  color: #fff;
+}
+
+/* .light .leaflet-container {
+  background: #c6cddd;
+  color: #000;
+} */
+
+#root .leaflet-container .leaflet-control-attribution {
+  font-family: 'Pragati Narrow', sans-serif;
+}
+
+#root .leaflet-container .leaflet-control-attribution {
+  background: #13151aaa;
+}
+
+/* .light .leaflet-container .leaflet-control-attribution {
+  background: #c6cdddaa;
+} */
+
+#root .leaflet-container .leaflet-control-attribution a {
+  color: #ddd;
+}
+
+/* .light .leaflet-container .leaflet-control-attribution a {
+  color: #222;
+} */

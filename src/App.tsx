@@ -1,9 +1,6 @@
-import './App.css'
+import Tracker from './components/Tracker'
+import './styles/App.css'
 
-function App() {
-  return (
-    <h1>bus tracker</h1>
-  )
-}
+const App = () => <Tracker />
 
 export default App

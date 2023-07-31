@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngTuple } from 'leaflet'
-// import { MonitoredVehicleJourney } from '../api/busTime'
-// import busTimeAPI from '../api/busTime'
+import { MonitoredVehicleJourney } from '../api/busTime'
+import busTimeAPI from '../api/busTime'
 import mapSettings from '../settings/map'
-// import drawBuses from '../indicators/drawBuses'
+import drawBuses from '../indicators/drawBuses'
 import drawUser from '../indicators/drawUser'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import 'leaflet/dist/leaflet.css'
@@ -12,6 +12,7 @@ import 'leaflet/dist/leaflet.css'
 
 const Tracker = () => {
   const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
+  const [busPositions, setBusPositions] = useState<MonitoredVehicleJourney[]>()
 
   const locateAndPositionUser = () => {
     const doGeolocation = (position: GeolocationPosition) => {
@@ -27,12 +28,20 @@ const Tracker = () => {
     navigator.geolocation.getCurrentPosition(doGeolocation)
   }
 
+  const getBusPositions = () => {
+    busTimeAPI
+      .fetchBusesForAllRoutes()
+      .then((buses: MonitoredVehicleJourney[]) => {
+        setBusPositions(buses)
+      })
+  }
+
   useEffect(() => {
-    // getBusPositions()
+    getBusPositions()
     locateAndPositionUser()
 
     setInterval(() => {
-      // getBusPositions()
+      getBusPositions()
       locateAndPositionUser()
     }, 15000)
   }, [])
@@ -49,6 +58,7 @@ const Tracker = () => {
         url={mapSettings.tilesURL.dark}
       />
       {drawBusRoutes()}
+      {busPositions && drawBuses(busPositions)}
       {userPosition && drawUser(userPosition)}
     </MapContainer>
   )

@@ -1,5 +1,5 @@
 import proxyServer from '../settings/proxyServer'
-import uniqid from 'uniqid'
+import { v4 as uuidv4 } from 'uuid';
 import routeConfig from '../settings/busRoutes'
 import {
   busTimeLineRefPrefix,
@@ -43,7 +43,7 @@ const destructureVehicleMonitoringData = (
 
 const fetchBusesForOneRoute = async (routeName: string) => {
   const encodedAPI = encodeURIComponent(
-    `${busTimeVehicleMonitoringAPI}${busTimeLineRefPrefix}${routeName}&nocache=${uniqid()}`
+    `${busTimeVehicleMonitoringAPI}${busTimeLineRefPrefix}${routeName}&nocache=${uuidv4()}`
   )
 
   const response = await fetch(`${proxyServer}${encodedAPI}`).catch((error) => {

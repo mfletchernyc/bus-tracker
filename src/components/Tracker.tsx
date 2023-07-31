@@ -7,6 +7,7 @@ import mapSettings from '../settings/map'
 import drawBuses from '../indicators/drawBuses'
 import drawUser from '../indicators/drawUser'
 import drawBusRoutes from '../indicators/drawBusRoutes'
+import drawBusStops from '../indicators/drawBusStops'
 import 'leaflet/dist/leaflet.css'
 
 
@@ -58,6 +59,7 @@ const Tracker = () => {
         url={mapSettings.tilesURL.dark}
       />
       {drawBusRoutes()}
+      {drawBusStops()}
       {busPositions && drawBuses(busPositions)}
       {userPosition && drawUser(userPosition)}
     </MapContainer>

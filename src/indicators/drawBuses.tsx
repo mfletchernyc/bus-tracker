@@ -18,9 +18,9 @@ const drawBuses = (buses: MonitoredVehicleJourney[]): ReactNode =>
       const marker = busMarker(routeConfig[routeName].color)
       const source = `src="${svg}${Buffer.from(marker).toString('base64')}"`
 
-      const size = 'width="12px" height="28px"'
+      const size = 'width="12px" height="22px"'
 
-      const translation = `translate(-25%, -33%)`
+      const translation = `translate(-10%, -25%)`
       const rotation = `rotate(${-bus.Bearing + 90}deg)`
       const style = `style="transform: ${translation} ${rotation}"`
 

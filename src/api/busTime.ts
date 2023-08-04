@@ -1,5 +1,5 @@
 import proxyServer from '../settings/proxyServer'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 import routeConfig from '../settings/busRoutes'
 import {
   busTimeLineRefPrefix,

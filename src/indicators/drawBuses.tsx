@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import L from 'leaflet'
 import { Marker } from 'react-leaflet'
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer'
 import busMarker from './busMarker'
 import { MonitoredVehicleJourney } from '../api/busTime'
 import routeConfig from '../settings/busRoutes'

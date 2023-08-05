@@ -48,21 +48,23 @@ const Tracker = () => {
   }, [])
 
   return (
-    <MapContainer
-      center={mapSettings.center}
-      zoom={mapSettings.zoom}
-      zoomControl={false}
-      style={{ minHeight: "100vh", minWidth: "100vw" }}
-    >
-      <TileLayer
-        attribution={mapSettings.attribution}
-        url={mapSettings.tilesURL.dark}
-      />
-      {drawBusRoutes()}
-      {drawBusStops()}
-      {busPositions && drawBuses(busPositions)}
-      {userPosition && drawUser(userPosition)}
-    </MapContainer>
+    <div className="map-container">
+      <MapContainer
+        center={mapSettings.center}
+        zoom={mapSettings.zoom}
+        zoomControl={false}
+        style={{ minHeight: "100vh", minWidth: "100vw" }}
+      >
+        <TileLayer
+          attribution={mapSettings.attribution}
+          url={mapSettings.tilesURL.dark}
+        />
+        {drawBusRoutes()}
+        {drawBusStops()}
+        {busPositions && drawBuses(busPositions)}
+        {userPosition && drawUser(userPosition)}
+      </MapContainer>
+    </div>
   )
 }
 

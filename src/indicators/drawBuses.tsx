@@ -6,7 +6,7 @@ import busMarker from './busMarker'
 import { MonitoredVehicleJourney } from '../api/busTime'
 import routeConfig from '../settings/busRoutes'
 
-const trimVehicleRef = (ref: string) => ref.split('_')[1]
+// const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const drawBuses = (buses: MonitoredVehicleJourney[]): ReactNode =>
   Object.values(buses).map((bus: MonitoredVehicleJourney, i) => {
@@ -27,11 +27,11 @@ const drawBuses = (buses: MonitoredVehicleJourney[]): ReactNode =>
       return `<img ${source} ${size} ${style} alt="" />`
     }
 
-    console.log(
-      `🚌 -> ${bus.PublishedLineName} #${trimVehicleRef(bus.VehicleRef)} [${
-        bus.VehicleLocation.Latitude
-      }, ${bus.VehicleLocation.Longitude}] bearing: ${bus.Bearing}`
-    )
+    // console.log(
+    //   `🚌 -> ${bus.PublishedLineName} #${trimVehicleRef(bus.VehicleRef)} [${
+    //     bus.VehicleLocation.Latitude
+    //   }, ${bus.VehicleLocation.Longitude}] bearing: ${bus.Bearing}`
+    // )
 
     return (
       <Marker

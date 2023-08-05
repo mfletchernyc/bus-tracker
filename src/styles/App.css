@@ -22,3 +22,45 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+.app-container {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+#app {
+  display: flex;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  transition: left 0.25s;
+  width: 200%;
+  z-index: 1;
+}
+
+#app.settings {
+  left: -100%;
+}
+
+#app > div {
+  width: 50%;
+}
+
+.settings-container {
+  padding: 20px;
+}
+
+#settings-button {
+  background: #13151aaa;
+  border: 0;
+  border-radius: 10px;
+  bottom: 10px;
+  height: 45px;
+  left: 10px;
+  padding: 0;
+  position: absolute;
+  width: 45px;
+  z-index: 9;
+}

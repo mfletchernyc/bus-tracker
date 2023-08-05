@@ -1,14 +1,14 @@
 import Tracker from './components/Tracker'
-import Settings from './components/Settings'
-import SettingsButton from './components/SettingsButton'
+import Panel from './components/Panel'
+import PanelButton from './components/PanelButton'
 import './styles/App.css'
 
 const App = () => (
   <div className="app-container">
-    <SettingsButton />
+    <PanelButton />
     <div id="app">
       <Tracker />
-      <Settings />
+      <Panel />
     </div>
   </div>
 )

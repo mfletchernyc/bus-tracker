@@ -48,10 +48,6 @@ body {
   width: 50%;
 }
 
-.panel-container {
-  padding: 20px;
-}
-
 #panel-button {
   background: #13151aaa;
   border: 0;
@@ -63,13 +59,4 @@ body {
   position: absolute;
   width: 45px;
   z-index: 9;
-}
-
-h1 {
-  margin: 0 0 10px;
-}
-
-p {
-  line-height: 1.25;
-  margin: 0 0 10px;
 }

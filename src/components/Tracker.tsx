@@ -1,39 +1,20 @@
-import { useEffect, useState } from 'react'
-import { MapContainer, TileLayer } from 'react-leaflet'
 import { LatLngTuple } from 'leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import { MonitoredVehicleJourney } from '../api/busTime'
-import busTimeAPI from '../api/busTime'
-import mapSettings from '../settings/map'
 import drawBuses from '../indicators/drawBuses'
-import drawUser from '../indicators/drawUser'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'
+import drawUser from '../indicators/drawUser'
+import mapSettings from '../settings/map'
 import 'leaflet/dist/leaflet.css'
 
 interface Props {
+  buses: MonitoredVehicleJourney[] | undefined
   userPosition: LatLngTuple
 }
 
-// TO DO: refactor App to get data; pass as props to Tracker and Panel.
 const Tracker = (props: Props) => {
-  const { userPosition } = props
-  const [busPositions, setBusPositions] = useState<MonitoredVehicleJourney[]>()
-
-  const getBusPositions = () => {
-    busTimeAPI
-      .fetchBusesForAllRoutes()
-      .then((buses: MonitoredVehicleJourney[]) => {
-        setBusPositions(buses)
-      })
-  }
-
-  useEffect(() => {
-    getBusPositions()
-
-    setInterval(() => {
-      getBusPositions()
-    }, 15000)
-  }, [])
+  const { buses, userPosition } = props
 
   return (
     <div className="map-container">
@@ -49,7 +30,7 @@ const Tracker = (props: Props) => {
         />
         {drawBusRoutes()}
         {drawBusStops()}
-        {busPositions && drawBuses(busPositions)}
+        {buses && drawBuses(buses)}
         {userPosition && drawUser(userPosition)}
       </MapContainer>
     </div>

@@ -13,17 +13,21 @@ const Panel = (props: Props) => {
   const trimVehicleRef = (ref: string) => ref.split('_')[1]
   
   const getBusInfo = () => (
-    buses && buses.map((bus: MonitoredVehicleJourney, i) => {
-      return (
-        <span key={i}>
-          🚌 → {bus.PublishedLineName} #{trimVehicleRef(bus.VehicleRef)}
-          {' '}
-          [{bus.VehicleLocation.Latitude.toFixed(4)}, {bus.VehicleLocation.Longitude.toFixed(4)}]
-          {' '}
-          bearing: ${bus.Bearing}
-        </span>
-      )
-    })
+    <p className="bus-data">
+      {
+        buses && buses.map((bus: MonitoredVehicleJourney, i) => {
+          return (
+            <span key={i}>
+              🚌 → {bus.PublishedLineName} #{trimVehicleRef(bus.VehicleRef)}
+              {' '}
+              [{bus.VehicleLocation.Latitude.toFixed(4)}, {bus.VehicleLocation.Longitude.toFixed(4)}]
+              {' '}
+              bearing: {bus.Bearing}
+            </span>
+          )
+        })
+      }
+    </p>
   )
 
   const getUserPosition = () => (
@@ -39,9 +43,7 @@ const Panel = (props: Props) => {
       <div className="panel">
         <h1>bus-tracker</h1>
         {getUserPosition()}
-        <p className="bus-data">
-          {getBusInfo()}
-        </p>
+        {getBusInfo()}
       </div>
     </div>
   )

@@ -56,9 +56,9 @@ body {
   background: #13151aaa;
   border: 0;
   border-radius: 10px;
-  bottom: 10px;
+  bottom: 20px;
   height: 45px;
-  left: 10px;
+  left: 20px;
   padding: 0;
   position: absolute;
   width: 45px;
@@ -66,5 +66,10 @@ body {
 }
 
 h1 {
+  margin: 0 0 10px;
+}
+
+p {
+  line-height: 1.25;
   margin: 0 0 10px;
 }

@@ -10,24 +10,14 @@ import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'
 import 'leaflet/dist/leaflet.css'
 
+interface Props {
+  userPosition: LatLngTuple
+}
 
-const Tracker = () => {
-  const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
+// TO DO: refactor App to get data; pass as props to Tracker and Panel.
+const Tracker = (props: Props) => {
+  const { userPosition } = props
   const [busPositions, setBusPositions] = useState<MonitoredVehicleJourney[]>()
-
-  const locateAndPositionUser = () => {
-    const doGeolocation = (position: GeolocationPosition) => {
-      const coords = position.coords
-
-      setUserPosition([coords.latitude, coords.longitude])
-
-      // TO DO: move this to the (upcoming) settings/info page.
-      console.log(`😐 -> ${[coords.latitude, coords.longitude]}`)
-      console.log(`User position accuracy: +/-${coords.accuracy} meters.`)
-    }
-
-    navigator.geolocation.getCurrentPosition(doGeolocation)
-  }
 
   const getBusPositions = () => {
     busTimeAPI
@@ -39,11 +29,9 @@ const Tracker = () => {
 
   useEffect(() => {
     getBusPositions()
-    locateAndPositionUser()
 
     setInterval(() => {
       getBusPositions()
-      locateAndPositionUser()
     }, 15000)
   }, [])
 

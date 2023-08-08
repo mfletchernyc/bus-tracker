@@ -4,20 +4,20 @@ Personal NYC MTA bus tracker for the Greenpoint neighborhood of Brooklyn.
 
 🚌 &nbsp;&nbsp;&nbsp; 🚌 &nbsp;&nbsp;&nbsp; 🚌
 
-## service alert for B48
-
-B48 stops along Lorimer St between Grand St and Meeker Ave are closed.
-
-Map data will need to be updated when the construction at the Lorimer Street L Station is complete.
-
 ## made with
 
-- [React](https://react.dev) and [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org), [React](https://react.dev), and [Vite](https://vitejs.dev/)
 - [MTA Bus Time API](https://bustime.mta.info/wiki/Developers/) and [transit data](http://web.mta.info/developers/developer-data-terms.html)
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Leaflet](https://leafletjs.com) and [React Leaflet](https://react-leaflet.js.org)
 - [Mapbox Studio](https://studio.mapbox.com)
 - [QGIS](https://qgis.org/)
+
+## service alert for B48
+
+B48 stops along Lorimer St between Grand St and Meeker Ave are closed.
+
+Map data will need to be updated when the construction at the Lorimer Street L Station is complete.
 
 ## local use
 

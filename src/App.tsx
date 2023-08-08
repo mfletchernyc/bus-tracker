@@ -6,16 +6,23 @@ import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
 import './styles/App.css'
 
+interface BusData {
+  buses: MonitoredVehicleJourney[];
+  timestamp: string;
+}
+
 const App = () => {
   const [buses, setBuses] = useState<MonitoredVehicleJourney[]>()
   const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
   const [userPositionAccuracy, setUserPositionAccuracy] = useState(0)
+  const [timestamp, setTimestamp] = useState<string>('')
   
   const getBuses = () => {
-    busTimeAPI
-      .fetchBusesForAllRoutes()
-      .then((buses: MonitoredVehicleJourney[]) => {
+    busTimeAPI.fetchBusesForAllRoutes()
+      .then((data: BusData) => {
+        const { buses, timestamp } = data
         setBuses(buses)
+        setTimestamp(timestamp)
       })
   }
 
@@ -49,6 +56,7 @@ const App = () => {
         />
         <Panel
           buses={buses}
+          timestamp={timestamp}
           userPosition={userPosition}
           userPositionAccuracy={userPositionAccuracy}
         />

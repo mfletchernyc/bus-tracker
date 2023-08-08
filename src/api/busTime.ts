@@ -5,11 +5,13 @@ import {
   busTimeLineRefPrefix,
   busTimeVehicleMonitoringAPI
 } from '../settings/busTime'
+import time from '../utilities/convertISO8601ToTime'
 
 interface SiriRouteData {
   contents: {
     Siri: {
       ServiceDelivery: {
+        ResponseTimestamp: string
         VehicleMonitoringDelivery: VehicleMonitoringDelivery[]
       }
     }
@@ -34,12 +36,17 @@ export interface MonitoredVehicleJourney {
   VehicleRef: string
 }
 
-const destructureVehicleMonitoringData = (
+const getVehicleActivity = (
   data: SiriRouteData
-): VehicleActivity[] => {
-  return data.contents?.Siri?.ServiceDelivery?.VehicleMonitoringDelivery[0]
-    ?.VehicleActivity
-}
+): VehicleActivity[] => (
+  data.contents?.Siri?.ServiceDelivery?.VehicleMonitoringDelivery[0]?.VehicleActivity
+)
+
+const getTimestamp = (
+  data: SiriRouteData
+): string => (
+  time(data.contents?.Siri?.ServiceDelivery?.ResponseTimestamp) ?? ''
+)
 
 const fetchBusesForOneRoute = async (routeName: string) => {
   const encodedAPI = encodeURIComponent(
@@ -60,6 +67,7 @@ const fetchBusesForOneRoute = async (routeName: string) => {
 const fetchBusesForAllRoutes = async () => {
   const apiRequests: Promise<SiriRouteData>[] = []
   const busesForAllRoutes: MonitoredVehicleJourney[] = []
+  let timestamp = ''
 
   for (const route in routeConfig) {
     const routePromise = fetchBusesForOneRoute(route)
@@ -72,7 +80,8 @@ const fetchBusesForAllRoutes = async () => {
   })
 
   routesData.forEach((route) => {
-    const vehicles: VehicleActivity[] = destructureVehicleMonitoringData(route)
+    const vehicles: VehicleActivity[] = getVehicleActivity(route)
+    timestamp = getTimestamp(route)
 
     vehicles.map((vehicle: VehicleActivity) => {
       const bus: MonitoredVehicleJourney = vehicle.MonitoredVehicleJourney
@@ -81,11 +90,12 @@ const fetchBusesForAllRoutes = async () => {
     })
   })
 
-  return busesForAllRoutes
+  return {
+    buses: busesForAllRoutes,
+    timestamp: timestamp
+  }
 }
 
-const busTimeAPI = {
-  fetchBusesForAllRoutes
-}
+const busTimeAPI = { fetchBusesForAllRoutes }
 
 export default busTimeAPI

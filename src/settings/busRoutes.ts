@@ -6,7 +6,7 @@ import B62geography from '../geojson/B62.json'
 // them like GeoJSON. Syntax errors, type errors. Try again another time. 
 // It works like this for now (except in indicators/drawBusRoutes.tsx). 🤷‍♂️
 
-export interface RouteConfig {
+export interface RouteSettings {
   [key: string]: {
     name: string
     color: string
@@ -15,7 +15,7 @@ export interface RouteConfig {
   }
 }
 
-const routeConfig: RouteConfig = {
+const routeSettings: RouteSettings = {
   B43: {
     name: 'B43',
     color: '#cc00ff',
@@ -36,4 +36,4 @@ const routeConfig: RouteConfig = {
   }
 }
 
-export default routeConfig
+export default routeSettings

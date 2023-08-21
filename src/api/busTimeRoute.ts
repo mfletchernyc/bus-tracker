@@ -1,6 +1,6 @@
 import proxyServer from '../settings/proxyServer'
 import { v4 as uuidv4 } from 'uuid'
-import routeConfig from '../settings/busRoutes'
+import routeSettings from '../settings/busRoutes'
 import {
   busTimeLineRefPrefix,
   busTimeVehicleMonitoringAPI
@@ -69,7 +69,7 @@ const fetchBusesForAllRoutes = async () => {
   const busesForAllRoutes: MonitoredVehicleJourney[] = []
   let timestamp = ''
 
-  for (const route in routeConfig) {
+  for (const route in routeSettings) {
     const routePromise = fetchBusesForOneRoute(route)
 
     apiRequests.push(routePromise)
@@ -96,6 +96,4 @@ const fetchBusesForAllRoutes = async () => {
   }
 }
 
-const busTimeAPI = { fetchBusesForAllRoutes }
-
-export default busTimeAPI
+export default fetchBusesForAllRoutes

@@ -1,6 +1,7 @@
 import { LatLngTuple } from 'leaflet'
 import { useEffect, useState } from 'react'
-import busTimeAPI, { MonitoredVehicleJourney } from './api/busTime'
+import fetchBusesForAllRoutes, { MonitoredVehicleJourney } from './api/busTimeRoute'
+import fetchBusesForAllStops from './api/busTimeStop'
 import Panel from './components/Panel'
 import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
@@ -17,13 +18,20 @@ const App = () => {
   const [userPositionAccuracy, setUserPositionAccuracy] = useState(0)
   const [timestamp, setTimestamp] = useState<string>('')
   
-  const getBuses = () => {
-    busTimeAPI.fetchBusesForAllRoutes()
+  const getBusesForRoutes = () => {
+    fetchBusesForAllRoutes()
       .then((data: BusData) => {
         const { buses, timestamp } = data
         setBuses(buses)
         setTimestamp(timestamp)
       })
+  }
+
+  const getBusesForStops = () => {
+    fetchBusesForAllStops()
+      .then((data) => {
+        console.log('App -> getBusesForStops', data)
+    })
   }
 
   const locateAndPositionUser = () => {
@@ -37,12 +45,14 @@ const App = () => {
   }
 
   useEffect(() => {
-    getBuses()
+    getBusesForRoutes()
     locateAndPositionUser()
+    getBusesForStops()
 
     setInterval(() => {
-      getBuses()
+      getBusesForRoutes()
       locateAndPositionUser()
+      getBusesForStops()
     }, 15000)
   }, [])
 

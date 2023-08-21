@@ -3,7 +3,7 @@ import L from 'leaflet'
 import { Marker } from 'react-leaflet'
 import { Buffer } from 'buffer'
 import busMarker from './busMarker'
-import { MonitoredVehicleJourney } from '../api/busTime'
+import { MonitoredVehicleJourney } from '../api/busTimeRoute'
 import routeConfig from '../settings/busRoutes'
 
 const drawBuses = (buses: MonitoredVehicleJourney[]): ReactNode =>

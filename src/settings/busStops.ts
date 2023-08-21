@@ -21,8 +21,8 @@ const busStopSettings: busStopSetting[] = [
   },
   {
     // B62
-    id: 305154,
-    name: 'Bedford Av/Manhattan Av',
+    id: 801198,
+    name: 'Nassau Av/Manhattan Av',
     position: [40.72352, -73.951]
   },
   {

@@ -1,6 +1,6 @@
 import { LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer } from 'react-leaflet'
-import { MonitoredVehicleJourney } from '../api/busTime'
+import { MonitoredVehicleJourney } from '../api/busTimeRoute'
 import drawBuses from '../indicators/drawBuses'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'

@@ -1,5 +1,5 @@
 import { LatLngTuple } from 'leaflet'
-import { MonitoredVehicleJourney } from '../api/busTime'
+import { MonitoredVehicleJourney } from '../api/busTimeRoute'
 import '../styles/Panel.css'
 
 interface Props {

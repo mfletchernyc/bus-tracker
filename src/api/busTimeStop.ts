@@ -21,10 +21,10 @@ interface StopMonitoringDelivery {
 }
 
 interface MonitoredStopVisit {
-  MonitoredVehicleJourney: MonitoredVehicleJourney
+  MonitoredVehicleJourney: MonitoredVehicleJourneyStop
 }
 
-export interface MonitoredVehicleJourney {
+export interface MonitoredVehicleJourneyStop {
   MonitoredCall: {
     ArrivalProximityText: string
     ExpectedArrivalTime: string
@@ -57,7 +57,7 @@ const fetchBusesForOneStop = async (stopId: number) => {
 
 const fetchBusesForAllStops = async () => {
   const apiRequests: Promise<SiriStopData>[] = []
-  const busesForAllStops: MonitoredVehicleJourney[] = []
+  const busesForAllStops: MonitoredVehicleJourneyStop[] = []
 
   stopSettings.forEach((stop) => {
     const stopPromise = fetchBusesForOneStop(stop.id)
@@ -73,7 +73,7 @@ const fetchBusesForAllStops = async () => {
     const vehicles: MonitoredStopVisit[] = getVehicleActivity(stop)
 
     vehicles.map((vehicle: MonitoredStopVisit) => {
-      const bus: MonitoredVehicleJourney = vehicle.MonitoredVehicleJourney
+      const bus: MonitoredVehicleJourneyStop = vehicle.MonitoredVehicleJourney
 
       busesForAllStops.push(bus)
     })

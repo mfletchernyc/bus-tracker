@@ -1,9 +1,11 @@
 import { LatLngTuple } from 'leaflet'
-import { MonitoredVehicleJourney } from '../api/busTimeRoute'
+import { MonitoredVehicleJourneyRoute } from '../api/busTimeRoute'
+import { MonitoredVehicleJourneyStop } from '../api/busTimeStop'
 import '../styles/Panel.css'
 
 interface Props {
-  buses: MonitoredVehicleJourney[] | undefined
+  buses: MonitoredVehicleJourneyRoute[] | undefined
+  stops: MonitoredVehicleJourneyStop[] | undefined
   timestamp: string
   userPosition: LatLngTuple
   userPositionAccuracy: number
@@ -12,7 +14,9 @@ interface Props {
 const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const Panel = (props: Props) => {
-  const { buses, userPosition, timestamp, userPositionAccuracy } = props
+  const { buses, stops, timestamp, userPosition, userPositionAccuracy } = props
+
+  console.log('Panel ->', stops)
 
   const getTimestamp = () => (
     <p>
@@ -28,7 +32,7 @@ const Panel = (props: Props) => {
     <p className="bus-data">
       {
         buses
-          ? buses.map((bus: MonitoredVehicleJourney, i) => {
+          ? buses.map((bus: MonitoredVehicleJourneyRoute, i) => {
             return (
               <span key={i}>
                 🚌 → {bus.PublishedLineName} #{trimVehicleRef(bus.VehicleRef)}

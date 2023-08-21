@@ -1,6 +1,6 @@
 import { LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer } from 'react-leaflet'
-import { MonitoredVehicleJourney } from '../api/busTimeRoute'
+import { MonitoredVehicleJourneyRoute } from '../api/busTimeRoute'
 import drawBuses from '../indicators/drawBuses'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'
@@ -9,7 +9,7 @@ import mapSettings from '../settings/map'
 import 'leaflet/dist/leaflet.css'
 
 interface Props {
-  buses: MonitoredVehicleJourney[] | undefined
+  buses: MonitoredVehicleJourneyRoute[] | undefined
   userPosition: LatLngTuple
 }
 

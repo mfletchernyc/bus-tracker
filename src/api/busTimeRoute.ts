@@ -23,10 +23,10 @@ interface VehicleMonitoringDelivery {
 }
 
 interface VehicleActivity {
-  MonitoredVehicleJourney: MonitoredVehicleJourney
+  MonitoredVehicleJourney: MonitoredVehicleJourneyRoute
 }
 
-export interface MonitoredVehicleJourney {
+export interface MonitoredVehicleJourneyRoute {
   Bearing: number
   PublishedLineName: string[]
   VehicleLocation: {
@@ -66,7 +66,7 @@ const fetchBusesForOneRoute = async (routeName: string) => {
 
 const fetchBusesForAllRoutes = async () => {
   const apiRequests: Promise<SiriRouteData>[] = []
-  const busesForAllRoutes: MonitoredVehicleJourney[] = []
+  const busesForAllRoutes: MonitoredVehicleJourneyRoute[] = []
   let timestamp = ''
 
   for (const route in routeSettings) {
@@ -84,7 +84,7 @@ const fetchBusesForAllRoutes = async () => {
     timestamp = getTimestamp(route)
 
     vehicles.map((vehicle: VehicleActivity) => {
-      const bus: MonitoredVehicleJourney = vehicle.MonitoredVehicleJourney
+      const bus: MonitoredVehicleJourneyRoute = vehicle.MonitoredVehicleJourney
 
       busesForAllRoutes.push(bus)
     })

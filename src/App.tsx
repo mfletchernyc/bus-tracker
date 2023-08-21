@@ -1,19 +1,20 @@
 import { LatLngTuple } from 'leaflet'
 import { useEffect, useState } from 'react'
-import fetchBusesForAllRoutes, { MonitoredVehicleJourney } from './api/busTimeRoute'
-import fetchBusesForAllStops from './api/busTimeStop'
+import fetchBusesForAllRoutes, { MonitoredVehicleJourneyRoute } from './api/busTimeRoute'
+import fetchBusesForAllStops, { MonitoredVehicleJourneyStop } from './api/busTimeStop'
 import Panel from './components/Panel'
 import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
 import './styles/App.css'
 
 interface BusData {
-  buses: MonitoredVehicleJourney[];
+  buses: MonitoredVehicleJourneyRoute[];
   timestamp: string;
 }
 
 const App = () => {
-  const [buses, setBuses] = useState<MonitoredVehicleJourney[]>()
+  const [buses, setBuses] = useState<MonitoredVehicleJourneyRoute[]>()
+  const [stops, setStops] = useState<MonitoredVehicleJourneyStop[]>()
   const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
   const [userPositionAccuracy, setUserPositionAccuracy] = useState(0)
   const [timestamp, setTimestamp] = useState<string>('')
@@ -30,7 +31,7 @@ const App = () => {
   const getBusesForStops = () => {
     fetchBusesForAllStops()
       .then((data) => {
-        console.log('App -> getBusesForStops', data)
+        setStops(data)
     })
   }
 
@@ -66,6 +67,7 @@ const App = () => {
         />
         <Panel
           buses={buses}
+          stops={stops}
           timestamp={timestamp}
           userPosition={userPosition}
           userPositionAccuracy={userPositionAccuracy}

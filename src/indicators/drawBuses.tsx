@@ -3,11 +3,11 @@ import L from 'leaflet'
 import { Marker } from 'react-leaflet'
 import { Buffer } from 'buffer'
 import busMarker from './busMarker'
-import { MonitoredVehicleJourney } from '../api/busTimeRoute'
+import { MonitoredVehicleJourneyRoute } from '../api/busTimeRoute'
 import routeConfig from '../settings/busRoutes'
 
-const drawBuses = (buses: MonitoredVehicleJourney[]): ReactNode =>
-  Object.values(buses).map((bus: MonitoredVehicleJourney, i) => {
+const drawBuses = (buses: MonitoredVehicleJourneyRoute[]): ReactNode =>
+  Object.values(buses).map((bus: MonitoredVehicleJourneyRoute, i) => {
     const routeName: string = bus.PublishedLineName[0]
 
     // leaflet-rotatedmarker broke with react-leaflet 2, so L.divIcon + CSS.

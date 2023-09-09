@@ -1,10 +1,10 @@
-import { ReactNode } from 'react'
-import L from 'leaflet'
-import { Marker } from 'react-leaflet'
 import { Buffer } from 'buffer'
+import L from 'leaflet'
+import { ReactNode } from 'react'
+import { Marker } from 'react-leaflet'
 import busMarker from './busMarker'
-import { MonitoredVehicleJourneyRoute } from '../api/busTimeRoute'
 import routeConfig from '../settings/busRoutes'
+import { MonitoredVehicleJourneyRoute } from '../types'
 
 const drawBuses = (buses: MonitoredVehicleJourneyRoute[]): ReactNode =>
   Object.values(buses).map((bus: MonitoredVehicleJourneyRoute, i) => {

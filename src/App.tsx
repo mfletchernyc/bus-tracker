@@ -1,10 +1,14 @@
 import { LatLngTuple } from 'leaflet'
 import { useEffect, useState } from 'react'
-import fetchBusesForAllRoutes, { MonitoredVehicleJourneyRoute } from './api/busTimeRoute'
-import fetchBusesForAllStops, { MonitoredVehicleJourneyStop } from './api/busTimeStop'
+import fetchBusesForAllRoutes from './api/busTimeRoute'
+import fetchBusesForAllStops from './api/busTimeStop'
 import Panel from './components/Panel'
 import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
+import {
+  MonitoredVehicleJourneyRoute,
+  MonitoredVehicleJourneyStop
+ } from './types'
 import './styles/App.css'
 
 interface BusData {
@@ -51,6 +55,7 @@ const App = () => {
     getBusesForStops()
 
     setInterval(() => {
+      console.log('---')
       getBusesForRoutes()
       locateAndPositionUser()
       getBusesForStops()
@@ -66,7 +71,6 @@ const App = () => {
           userPosition={userPosition}
         />
         <Panel
-          buses={buses}
           stops={stops}
           timestamp={timestamp}
           userPosition={userPosition}

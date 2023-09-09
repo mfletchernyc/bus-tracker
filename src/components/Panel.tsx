@@ -1,24 +1,20 @@
 import { LatLngTuple } from 'leaflet'
-import { MonitoredVehicleJourneyRoute } from '../api/busTimeRoute'
-import { MonitoredVehicleJourneyStop } from '../api/busTimeStop'
+import { MonitoredVehicleJourneyStop} from '../types'
 import '../styles/Panel.css'
 
 interface Props {
-  buses: MonitoredVehicleJourneyRoute[] | undefined
   stops: MonitoredVehicleJourneyStop[] | undefined
   timestamp: string
   userPosition: LatLngTuple
   userPositionAccuracy: number
 }
 
-const trimVehicleRef = (ref: string) => ref.split('_')[1]
+// const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const Panel = (props: Props) => {
-  const { buses, stops, timestamp, userPosition, userPositionAccuracy } = props
+  const { stops, timestamp, userPosition, userPositionAccuracy } = props
 
-  console.log('Panel ->', stops)
-
-  const getTimestamp = () => (
+  const renderTimestamp = () => (
     <p>
       {
         timestamp
@@ -27,28 +23,23 @@ const Panel = (props: Props) => {
       }
     </p>
   )
-  
-  const getBusInfo = () => (
+
+  const renderBusesForStops = () => (
     <p className="bus-data">
       {
-        buses
-          ? buses.map((bus: MonitoredVehicleJourneyRoute, i) => {
+        stops
+          ? stops.map((stop, i) => {
             return (
               <span key={i}>
-                🚌 → {bus.PublishedLineName} #{trimVehicleRef(bus.VehicleRef)}
-                {' '}
-                [{bus.VehicleLocation.Latitude.toFixed(4)}, {bus.VehicleLocation.Longitude.toFixed(4)}]
-                {' '}
-                bearing: {bus.Bearing}
-              </span>
-            )
-          })
-        : 'Error fetching bus data.'
+                🚌 → {stop.PublishedLineName} {stop.VehicleRef}
+                </span>
+            )})
+          : 'Waiting for bus data...'
       }
     </p>
   )
 
-  const getUserPosition = () => (
+  const renderUserPosition = () => (
     <p>
       😐 → {userPosition[0].toFixed(4)}, {userPosition[1].toFixed(4)}
       {' '}
@@ -61,9 +52,9 @@ const Panel = (props: Props) => {
       <div className="panel">
         <h1>bus-tracker</h1>
         <p>To do: theme, tests, bus data for stops, Prettier support.</p>
-        {getTimestamp()}
-        {getUserPosition()}
-        {getBusInfo()}
+        {renderTimestamp()}
+        {renderUserPosition()}
+        {renderBusesForStops()}
       </div>
     </div>
   )

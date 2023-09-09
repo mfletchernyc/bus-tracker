@@ -1,43 +1,26 @@
-import proxyServer from '../settings/proxyServer'
 import { v4 as uuidv4 } from 'uuid'
 import stopSettings from '../settings/busStops'
 import {
   busTimeStopMonitoringAPI
 } from '../settings/busTime'
+import proxyServer from '../settings/proxyServer'
+import {
+  MonitoredStopVisit,
+  MonitoredVehicleJourneyStop,
+  SiriStopData
+} from '../types'
 
-interface SiriStopData {
-  contents: {
-    Siri: {
-      ServiceDelivery: {
-        ResponseTimestamp: string
-        StopMonitoringDelivery: StopMonitoringDelivery[]
-      }
-    }
-  }
-}
+// https://bustime.mta.info/wiki/Developers/SIRIStopMonitoring
 
-interface StopMonitoringDelivery {
-  MonitoredStopVisit: MonitoredStopVisit[]
-}
-
-interface MonitoredStopVisit {
-  MonitoredVehicleJourney: MonitoredVehicleJourneyStop
-}
-
-export interface MonitoredVehicleJourneyStop {
-  MonitoredCall: {
-    ArrivalProximityText: string
-    ExpectedArrivalTime: string
-  }
-  PublishedLineName: string[]
-  VehicleRef: string
-}
+// Time stamps for both route and stop?
 
 const getVehicleActivity = (
   data: SiriStopData
 ): MonitoredStopVisit[] => (
   data.contents?.Siri?.ServiceDelivery?.StopMonitoringDelivery[0]?.MonitoredStopVisit
 )
+
+// ex: https://bustime.mta.info/api/siri/stop-monitoring.json?key=e8491098-5217-4a3b-9ec5-848d45688157&version=2&VehicleMonitoringDetailLevel=minimum&MonitoringRef=305167
 
 const fetchBusesForOneStop = async (stopId: number) => {
   const encodedAPI = encodeURIComponent(
@@ -51,6 +34,10 @@ const fetchBusesForOneStop = async (stopId: number) => {
   })
 
   const data: SiriStopData = await response.json()
+
+  // SOMETIMES THERE ARE NO BUSES
+  // StopMonitoringDelivery has no MonitoredStopVisit 
+  // so: Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'vehicles.map')
   
   return data
 }
@@ -60,9 +47,7 @@ const fetchBusesForAllStops = async () => {
   const busesForAllStops: MonitoredVehicleJourneyStop[] = []
 
   stopSettings.forEach((stop) => {
-    const stopPromise = fetchBusesForOneStop(stop.id)
-
-    apiRequests.push(stopPromise)
+    apiRequests.push(fetchBusesForOneStop(stop.id))
   })
 
   const stopsData = await Promise.all(apiRequests).catch((error) => {
@@ -71,6 +56,7 @@ const fetchBusesForAllStops = async () => {
 
   stopsData.forEach((stop) => {
     const vehicles: MonitoredStopVisit[] = getVehicleActivity(stop)
+    // console.log('stopsData.forEach: vehicles: MonitoredVehicleJourney ->', vehicles[0].MonitoredVehicleJourney)
 
     vehicles.map((vehicle: MonitoredStopVisit) => {
       const bus: MonitoredVehicleJourneyStop = vehicle.MonitoredVehicleJourney

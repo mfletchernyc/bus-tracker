@@ -1,40 +1,19 @@
-import proxyServer from '../settings/proxyServer'
 import { v4 as uuidv4 } from 'uuid'
 import routeSettings from '../settings/busRoutes'
 import {
   busTimeLineRefPrefix,
   busTimeVehicleMonitoringAPI
 } from '../settings/busTime'
+import proxyServer from '../settings/proxyServer'
 import time from '../utilities/convertISO8601ToTime'
+import {
+  MonitoredVehicleJourneyRoute,
+  SiriRouteData,
+  VehicleActivity
+} from '../types'
 
-interface SiriRouteData {
-  contents: {
-    Siri: {
-      ServiceDelivery: {
-        ResponseTimestamp: string
-        VehicleMonitoringDelivery: VehicleMonitoringDelivery[]
-      }
-    }
-  }
-}
 
-interface VehicleMonitoringDelivery {
-  VehicleActivity: VehicleActivity[]
-}
-
-interface VehicleActivity {
-  MonitoredVehicleJourney: MonitoredVehicleJourneyRoute
-}
-
-export interface MonitoredVehicleJourneyRoute {
-  Bearing: number
-  PublishedLineName: string[]
-  VehicleLocation: {
-    Latitude: number
-    Longitude: number
-  }
-  VehicleRef: string
-}
+// https://bustime.mta.info/wiki/Developers/SIRIVehicleMonitoring
 
 const getVehicleActivity = (
   data: SiriRouteData

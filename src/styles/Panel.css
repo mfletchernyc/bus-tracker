@@ -15,11 +15,6 @@ p {
   margin: 0 0 10px;
 }
 
-.bus-data {
-  max-height: 30%;
-  overflow: auto;
-}
-
 .bus-data span {
   display: block;
 }

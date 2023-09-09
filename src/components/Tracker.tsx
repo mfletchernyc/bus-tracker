@@ -1,11 +1,11 @@
 import { LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer } from 'react-leaflet'
-import { MonitoredVehicleJourneyRoute } from '../api/busTimeRoute'
 import drawBuses from '../indicators/drawBuses'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'
 import drawUser from '../indicators/drawUser'
 import mapSettings from '../settings/map'
+import { MonitoredVehicleJourneyRoute } from '../types'
 import 'leaflet/dist/leaflet.css'
 
 interface Props {

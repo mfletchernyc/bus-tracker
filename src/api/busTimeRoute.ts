@@ -12,7 +12,6 @@ import {
   VehicleActivity
 } from '../types'
 
-
 // https://bustime.mta.info/wiki/Developers/SIRIVehicleMonitoring
 
 const getVehicleActivity = (
@@ -49,9 +48,7 @@ const fetchBusesForAllRoutes = async () => {
   let timestamp = ''
 
   for (const route in routeSettings) {
-    const routePromise = fetchBusesForOneRoute(route)
-
-    apiRequests.push(routePromise)
+    apiRequests.push(fetchBusesForOneRoute(route))
   }
 
   const routesData = await Promise.all(apiRequests).catch((error) => {

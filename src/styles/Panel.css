@@ -15,6 +15,15 @@ p {
   margin: 0 0 10px;
 }
 
-.bus-data span {
+.stop-header {
+  font-weight: bold;
+  margin: 10px 0 0;
+}
+
+.stop-header:first-child {
+  margin: 0;
+}
+
+.stop-data span {
   display: block;
 }

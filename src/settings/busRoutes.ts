@@ -1,19 +1,11 @@
 import B43geography from '../geojson/B43.json'
 import B48geography from '../geojson/B48.json'
 import B62geography from '../geojson/B62.json'
+import { RouteSettings } from '../types'
 
 // These bus routes are GeoJSON, but cause constant problems when I treat
 // them like GeoJSON. Syntax errors, type errors. Try again another time. 
 // It works like this for now (except in indicators/drawBusRoutes.tsx). 🤷‍♂️
-
-export interface RouteSettings {
-  [key: string]: {
-    name: string
-    color: string
-    lineRef: string
-    path: object
-  }
-}
 
 const routeSettings: RouteSettings = {
   B43: {

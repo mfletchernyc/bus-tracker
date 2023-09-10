@@ -1,18 +1,22 @@
 import { LatLngTuple } from 'leaflet'
-import { MonitoredVehicleJourneyStop} from '../types'
+import stopSettings from '../settings/busStops'
+// import time from '../utilities/convertISO8601ToTime'
 import '../styles/Panel.css'
 
 interface Props {
-  stops: MonitoredVehicleJourneyStop[] | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  stops: any
   timestamp: string
   userPosition: LatLngTuple
   userPositionAccuracy: number
 }
 
-// const trimVehicleRef = (ref: string) => ref.split('_')[1]
+const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const Panel = (props: Props) => {
-  const { stops, timestamp, userPosition, userPositionAccuracy } = props
+  const {stops, timestamp, userPosition, userPositionAccuracy } = props
+
+  console.log('Panel: stops ->', stops)
 
   const renderTimestamp = () => (
     <p>
@@ -24,19 +28,46 @@ const Panel = (props: Props) => {
     </p>
   )
 
+  /*
+    status: MonitoredCall.ArrivalProximityText,
+    eta: MonitoredCall.ExpectedArrivalTime,
+    departure: MonitoredCall.ExpectedDepartureTime,
+    terminal: OriginAimedDepartureTime
+  */
+
   const renderBusesForStops = () => (
-    <p className="bus-data">
+    <div className="stop-data">
       {
-        stops
-          ? stops.map((stop, i) => {
-            return (
-              <span key={i}>
-                🚌 → {stop.PublishedLineName} {stop.VehicleRef}
-                </span>
-            )})
-          : 'Waiting for bus data...'
+        Object.keys(stopSettings).map((stopId, i) =>
+          <>
+            <p className="stop-header" key={`header${i}`}>
+              {stopSettings[stopId]?.name} [{stopSettings[stopId]?.route}]
+            </p>
+
+            {
+              stops[stopId]
+                ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  stops[stopId].map((stop: any, i: number) =>
+                    <span key={`bus${i}`}>
+                      🚌 → {stop.PublishedLineName[0]} ({trimVehicleRef(stop.VehicleRef)}):
+                      {' '}
+                      {
+                        // MTA data gets weird sometimes.
+                        stop.OriginAimedDepartureTime
+                        ? `At terminal. Departs ${stop.MonitoredCall.ExpectedDepartureTime || stop.OriginAimedDepartureTime}`
+                        : `
+                          ${stop.MonitoredCall?.ArrivalProximityText}
+                            (ETA ${stop.MonitoredCall.ExpectedArrivalTime || 'unkown'})
+                        `
+                      }
+                    </span>
+                  )
+                : `🚫 No buses found for stop ${stopId}.`
+            }
+          </>
+        )
       }
-    </p>
+    </div>
   )
 
   const renderUserPosition = () => (
@@ -51,10 +82,13 @@ const Panel = (props: Props) => {
     <div className="panel-container">
       <div className="panel">
         <h1>bus-tracker</h1>
-        <p>To do: theme, tests, bus data for stops, Prettier support.</p>
+        <p>To do: theme, tests, variable marker size, Prettier support.</p>
         {renderTimestamp()}
         {renderUserPosition()}
-        {renderBusesForStops()}
+        {stops
+          ? renderBusesForStops()
+          : <p>Waiting for bus data...</p>
+        }
       </div>
     </div>
   )

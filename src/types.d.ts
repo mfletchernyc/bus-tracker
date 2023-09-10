@@ -1,3 +1,22 @@
+import { LatLngTuple } from 'leaflet'
+
+interface RouteSettings {
+  [key: string]: {
+    name: string
+    color: string
+    lineRef: string
+    path: object
+  }
+}
+
+interface StopSettings {
+  [key: string]: {
+    name: string
+    position: LatLngTuple
+    route: string
+  }
+}
+
 // https://bustime.mta.info/wiki/Developers/SIRIVehicleMonitoring
 
 interface SiriRouteData {
@@ -60,10 +79,13 @@ interface MonitoredVehicleJourneyStop {
 }
 
 export {
+  BusesForOneStop,
   MonitoredStopVisit,
   MonitoredVehicleJourneyRoute,
   MonitoredVehicleJourneyStop,
+  RouteSettings,
   SiriRouteData,
   SiriStopData,
+  StopSettings,
   VehicleActivity
 }

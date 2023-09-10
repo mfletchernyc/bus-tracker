@@ -5,10 +5,7 @@ import fetchBusesForAllStops from './api/busTimeStop'
 import Panel from './components/Panel'
 import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
-import {
-  MonitoredVehicleJourneyRoute,
-  MonitoredVehicleJourneyStop
- } from './types'
+import { MonitoredVehicleJourneyRoute } from './types'
 import './styles/App.css'
 
 interface BusData {
@@ -18,7 +15,8 @@ interface BusData {
 
 const App = () => {
   const [buses, setBuses] = useState<MonitoredVehicleJourneyRoute[]>()
-  const [stops, setStops] = useState<MonitoredVehicleJourneyStop[]>()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [stops, setStops] = useState<any[]>()
   const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
   const [userPositionAccuracy, setUserPositionAccuracy] = useState(0)
   const [timestamp, setTimestamp] = useState<string>('')
@@ -36,7 +34,7 @@ const App = () => {
     fetchBusesForAllStops()
       .then((data) => {
         setStops(data)
-    })
+      })
   }
 
   const locateAndPositionUser = () => {
@@ -55,7 +53,6 @@ const App = () => {
     getBusesForStops()
 
     setInterval(() => {
-      console.log('---')
       getBusesForRoutes()
       locateAndPositionUser()
       getBusesForStops()

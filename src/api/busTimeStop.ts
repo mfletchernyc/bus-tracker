@@ -12,61 +12,60 @@ import {
 
 // https://bustime.mta.info/wiki/Developers/SIRIStopMonitoring
 
-// Time stamps for both route and stop?
-
 const getVehicleActivity = (
   data: SiriStopData
 ): MonitoredStopVisit[] => (
   data.contents?.Siri?.ServiceDelivery?.StopMonitoringDelivery[0]?.MonitoredStopVisit
 )
 
-// ex: https://bustime.mta.info/api/siri/stop-monitoring.json?key=e8491098-5217-4a3b-9ec5-848d45688157&version=2&VehicleMonitoringDetailLevel=minimum&MonitoringRef=305167
-
-const fetchBusesForOneStop = async (stopId: number) => {
+const fetchBusesForOneStop = async (stopId: string) => {
   const encodedAPI = encodeURIComponent(
     `${busTimeStopMonitoringAPI}${stopId}&nocache=${uuidv4()}`
   )
 
-  const response = await fetch(`${proxyServer}${encodedAPI}`).catch((error) => {
-    throw new Error(
-      `Failed to fetch stop data for ${stopId}. ${error.message}`
-    )
-  })
+  const response = await fetch(`${proxyServer}${encodedAPI}`)
+    .catch((error) => {
+      throw new Error(
+        `Failed to fetch stop data for ${stopId}. ${error.message}`
+      )
+    })
 
   const data: SiriStopData = await response.json()
 
-  // SOMETIMES THERE ARE NO BUSES
-  // StopMonitoringDelivery has no MonitoredStopVisit 
-  // so: Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'vehicles.map')
-  
   return data
 }
 
+// TO DO: type
 const fetchBusesForAllStops = async () => {
-  const apiRequests: Promise<SiriStopData>[] = []
-  const busesForAllStops: MonitoredVehicleJourneyStop[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const busesForAllStops: any = {} // MonitoredVehicleJourneyStop[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const stopsData: any = {}
 
-  stopSettings.forEach((stop) => {
-    apiRequests.push(fetchBusesForOneStop(stop.id))
-  })
+  for (const stopId in stopSettings) {
+    const buses = await fetchBusesForOneStop(stopId)
+    stopsData[stopId] = buses
+  }
 
-  const stopsData = await Promise.all(apiRequests).catch((error) => {
-    throw new Error(`Failed to fetch bus data for all stops. ${error.message}`)
-  })
+  for (const [stopId, stopData] of Object.entries(stopsData)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const busesForThisStop: any = []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const vehicles: MonitoredStopVisit[] = getVehicleActivity(<any>stopData)
 
-  stopsData.forEach((stop) => {
-    const vehicles: MonitoredStopVisit[] = getVehicleActivity(stop)
-    // console.log('stopsData.forEach: vehicles: MonitoredVehicleJourney ->', vehicles[0].MonitoredVehicleJourney)
+    // Sometimes there are no buses, and StopMonitoringDelivery has no MonitoredStopVisit.
+    // -> Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'vehicles.map')
+    if (vehicles) {
+      vehicles.map((vehicle: MonitoredStopVisit) => {
+        const bus: MonitoredVehicleJourneyStop = vehicle.MonitoredVehicleJourney
 
-    vehicles.map((vehicle: MonitoredStopVisit) => {
-      const bus: MonitoredVehicleJourneyStop = vehicle.MonitoredVehicleJourney
+        busesForThisStop.push(bus)
+      })
 
-      busesForAllStops.push(bus)
-    })
-  })
+      busesForAllStops[stopId] = busesForThisStop
+    }
+  }
 
   return busesForAllStops
 }
-
-
 export default fetchBusesForAllStops

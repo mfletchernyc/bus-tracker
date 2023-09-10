@@ -1,6 +1,6 @@
 import { LatLngTuple } from 'leaflet'
 import stopSettings from '../settings/busStops'
-// import time from '../utilities/convertISO8601ToTime'
+import time from '../utilities/convertISO8601ToTime'
 import '../styles/Panel.css'
 
 interface Props {
@@ -35,6 +35,27 @@ const Panel = (props: Props) => {
     terminal: OriginAimedDepartureTime
   */
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getFormattedStopData = (stop: any) => {
+    let markup = `${stop.PublishedLineName[0]} (${trimVehicleRef(stop.VehicleRef)}) `
+
+    // MTA data gets weird sometimes.
+    if (stop.OriginAimedDepartureTime) {
+      const departs = stop.MonitoredCall.ExpectedDepartureTime || stop.OriginAimedDepartureTime
+
+      markup += `At terminal. Departs ${time(departs)}.`
+    } else {
+      const status = stop.MonitoredCall.ArrivalProximityText
+      const arrivalTime = stop.MonitoredCall?.ExpectedArrivalTime
+      const arrives = arrivalTime ? time(arrivalTime) : 'unknown'
+
+      markup += `${status} (ETA ${arrives}).`
+    }
+    
+
+    return markup
+  }
+
   const renderBusesForStops = () => (
     <div className="stop-data">
       {
@@ -49,17 +70,7 @@ const Panel = (props: Props) => {
                 ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   stops[stopId].map((stop: any, i: number) =>
                     <span key={`bus${i}`}>
-                      🚌 → {stop.PublishedLineName[0]} ({trimVehicleRef(stop.VehicleRef)}):
-                      {' '}
-                      {
-                        // MTA data gets weird sometimes.
-                        stop.OriginAimedDepartureTime
-                        ? `At terminal. Departs ${stop.MonitoredCall.ExpectedDepartureTime || stop.OriginAimedDepartureTime}`
-                        : `
-                          ${stop.MonitoredCall?.ArrivalProximityText}
-                            (ETA ${stop.MonitoredCall.ExpectedArrivalTime || 'unkown'})
-                        `
-                      }
+                      🚌 → {getFormattedStopData(stop)}
                     </span>
                   )
                 : `🚫 No buses found for stop ${stopId}.`

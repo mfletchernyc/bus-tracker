@@ -16,8 +16,6 @@ const trimVehicleRef = (ref: string) => ref.split('_')[1]
 const Panel = (props: Props) => {
   const {stops, timestamp, userPosition, userPositionAccuracy } = props
 
-  console.log('Panel: stops ->', stops)
-
   const renderTimestamp = () => (
     <p>
       {

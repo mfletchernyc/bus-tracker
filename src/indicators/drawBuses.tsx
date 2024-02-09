@@ -5,8 +5,9 @@ import { Marker } from 'react-leaflet'
 import busMarker from './busMarker'
 import routeConfig from '../settings/busRoutes'
 import { MonitoredVehicleJourneyRoute } from '../types'
+import zoomToMarkerScale from '../utilities/getMarkerScale'
 
-const drawBuses = (buses: MonitoredVehicleJourneyRoute[]): ReactNode =>
+const drawBuses = (buses: MonitoredVehicleJourneyRoute[], zoom: number): ReactNode =>
   Object.values(buses).map((bus: MonitoredVehicleJourneyRoute, i) => {
     const routeName: string = bus.PublishedLineName[0]
 
@@ -15,8 +16,9 @@ const drawBuses = (buses: MonitoredVehicleJourneyRoute[]): ReactNode =>
       const svg = 'data:image/svg+xml;base64,'
       const marker = busMarker(routeConfig[routeName].color)
       const source = `src="${svg}${Buffer.from(marker).toString('base64')}"`
+      const markerScale = zoomToMarkerScale(zoom)
 
-      const size = 'width="12px" height="22px"'
+      const size = `width="${12 * markerScale}px" height="${22 * markerScale}px"`
 
       const translation = `translate(-10%, -25%)`
       const rotation = `rotate(${-bus.Bearing + 90}deg)`

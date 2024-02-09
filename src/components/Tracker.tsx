@@ -1,5 +1,6 @@
 import { LatLngTuple } from 'leaflet'
-import { MapContainer, TileLayer } from 'react-leaflet'
+import { useState } from 'react'
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 import drawBuses from '../indicators/drawBuses'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'
@@ -15,6 +16,24 @@ interface Props {
 
 const Tracker = (props: Props) => {
   const { buses, userPosition } = props
+  const [zoom, setZoom] = useState(mapSettings.zoom)
+
+  const MapElementsWithZoom = () => {
+    const mapEvents = useMapEvents({
+        zoomend: () => {
+          setZoom(mapEvents.getZoom())
+          console.log('zoomend: zoom ->', zoom)
+        }
+    })
+    
+    return (
+      <>
+        {drawBusStops(zoom)}
+        {buses && drawBuses(buses, zoom)}
+        {userPosition && drawUser(userPosition, zoom)}
+      </>
+    )
+  }
 
   return (
     <div className="map-container">
@@ -23,15 +42,14 @@ const Tracker = (props: Props) => {
         zoom={mapSettings.zoom}
         zoomControl={false}
         style={{ minHeight: "100vh", minWidth: "100vw" }}
+        
       >
         <TileLayer
           attribution={mapSettings.attribution}
           url={mapSettings.tilesURL.dark}
         />
         {drawBusRoutes()}
-        {drawBusStops()}
-        {buses && drawBuses(buses)}
-        {userPosition && drawUser(userPosition)}
+        <MapElementsWithZoom />
       </MapContainer>
     </div>
   )

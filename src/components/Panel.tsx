@@ -62,7 +62,7 @@ const Panel = (props: Props) => {
         Object.keys(stopSettings).map((stopId, i) =>
           <>
             <p className="stop-header" key={`header${i}`}>
-              {stopSettings[stopId]?.name} [{stopSettings[stopId]?.route}]
+              {stopSettings[stopId]?.name} ({stopSettings[stopId]?.route})
             </p>
 
             {
@@ -73,7 +73,7 @@ const Panel = (props: Props) => {
                       🚌 → {getFormattedStopData(stop)}
                     </span>
                   )
-                : `🚫 No buses found for stop ${stopId}.`
+                : <span>🚫 No buses en route to this stop.</span>
             }
           </>
         )
@@ -93,7 +93,6 @@ const Panel = (props: Props) => {
     <div className="panel-container">
       <div className="panel">
         <h1>bus-tracker</h1>
-        <p>To do: theme, tests, variable marker size, Prettier support.</p>
         {renderTimestamp()}
         {renderUserPosition()}
         {stops

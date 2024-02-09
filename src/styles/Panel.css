@@ -11,8 +11,18 @@ h1 {
 }
 
 p {
-  line-height: 1.25;
+  line-height: 1.2;
   margin: 0 0 10px;
+}
+
+.stop-data {
+  max-height: 66.6%;
+  overflow: auto;
+}
+
+.stop-data span {
+  display: block;
+  line-height: 1.33;
 }
 
 .stop-header {
@@ -22,8 +32,4 @@ p {
 
 .stop-header:first-child {
   margin: 0;
-}
-
-.stop-data span {
-  display: block;
 }

@@ -26,10 +26,28 @@ p {
 }
 
 .stop-header {
+  cursor: pointer;
   font-weight: bold;
   margin: 10px 0 0;
 }
 
 .stop-header:first-child {
   margin: 0;
+}
+
+/* keithjgrant.com/posts/2023/04/transitioning-to-height-auto/ */
+.stops-animation {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition: all 0.25s;
+}
+
+.collapsed .stops-animation {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.stops-animation .stops {
+  overflow: hidden;
 }

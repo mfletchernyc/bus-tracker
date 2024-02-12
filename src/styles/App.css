@@ -37,7 +37,7 @@ body {
   height: 100%;
   left: 0;
   position: absolute;
-  transition: left 0.25s;
+  transition: left 0.25s ease-out;
   width: 200%;
   z-index: 1;
 }

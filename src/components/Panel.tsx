@@ -20,12 +20,10 @@ const Panel = (props: Props) => {
     <p>{timestamp ? `Bus data last fetched at ${timestamp}.` : 'Error fetching timestamp.'}</p>
   )
 
-  /*
-    status: MonitoredCall.ArrivalProximityText,
-    eta: MonitoredCall.ExpectedArrivalTime,
-    departure: MonitoredCall.ExpectedDepartureTime,
-    terminal: OriginAimedDepartureTime
-  */
+  const toggleStop = (stopId: string) => {
+    const stop = document.getElementById(stopId)
+    stop?.classList.toggle('collapsed')
+  }
 
   const getFormattedStopData = (stop: StopData) => {
     let markup = `${stop.PublishedLineName[0]} (${trimVehicleRef(stop.VehicleRef)}) `
@@ -33,13 +31,11 @@ const Panel = (props: Props) => {
     // MTA data gets weird sometimes.
     if (stop.OriginAimedDepartureTime) {
       const departureTime = stop.MonitoredCall.ExpectedDepartureTime || stop.OriginAimedDepartureTime
-
       markup += `At terminal. Departs ${time(departureTime)}.`
     } else {
       const status = stop.MonitoredCall.ArrivalProximityText
       const arrivalTime = stop.MonitoredCall?.ExpectedArrivalTime
       const eta = arrivalTime ? time(arrivalTime) : 'unknown'
-
       markup += `${status} (ETA ${eta}).`
     }
 
@@ -49,18 +45,22 @@ const Panel = (props: Props) => {
   const renderBusesForStops = () => (
     <div className="stop-data">
       {Object.keys(stopSettings).map((stopId, i) => (
-        <section key={`section${i}`}>
-          <p className="stop-header" key={`header${i}`}>
+        <section id={stopId} key={`section${i}`}>
+          <p className="stop-header" key={`header${i}`} onClick={() => toggleStop(stopId)}>
             {stopSettings[stopId]?.name} ({stopSettings[stopId]?.route})
           </p>
 
-          {stops?.[stopId] ? (
-            stops[stopId].map((stop: StopData, i: number) => (
-              <span key={`bus${i}`}>🚌 → {getFormattedStopData(stop)}</span>
-            ))
-          ) : (
-            <span>🚫 No buses en route to this stop.</span>
-          )}
+          <div className="stops-animation">
+            <div className="stops">
+              {stops?.[stopId] ? (
+                stops[stopId].map((stop: StopData, i: number) => (
+                  <span key={`bus${i}`}>🚌 → {getFormattedStopData(stop)}</span>
+                ))
+              ) : (
+                <span>🚫 No buses en route to this stop.</span>
+              )}
+            </div>
+          </div>
         </section>
       ))}
     </div>

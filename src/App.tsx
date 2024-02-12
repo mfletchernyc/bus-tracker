@@ -20,6 +20,8 @@ const App = () => {
   const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
   const [userPositionAccuracy, setUserPositionAccuracy] = useState(0)
   const [timestamp, setTimestamp] = useState<string>('')
+
+  const [panelIsOpen, setPanelIsOpen] = useState(false)
   
   const getBusesForRoutes = () => {
     fetchBusesForAllRoutes()
@@ -47,6 +49,12 @@ const App = () => {
     navigator.geolocation.getCurrentPosition(doGeolocation)
   }
 
+  const togglePanel = () => {
+    setPanelIsOpen(!panelIsOpen)
+  }
+
+  const getPanelClass = () => panelIsOpen ? 'panel' : ''
+
   useEffect(() => {
     getBusesForRoutes()
     locateAndPositionUser()
@@ -61,8 +69,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <PanelButton />
-      <div id="app">
+      <div id="app" className={getPanelClass()}>
         <Tracker
           buses={buses}
           userPosition={userPosition}
@@ -74,6 +81,7 @@ const App = () => {
           userPositionAccuracy={userPositionAccuracy}
         />
       </div>
+      <PanelButton onClick={togglePanel}/>
     </div>
   )
 }

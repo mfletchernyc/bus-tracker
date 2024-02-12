@@ -18,12 +18,11 @@ const Tracker = (props: Props) => {
   const { buses, userPosition } = props
   const [zoom, setZoom] = useState(mapSettings.zoom)
 
-  const MapElementsWithZoom = () => {
+  const ScaledMapElements = () => {
     const mapEvents = useMapEvents({
-        zoomend: () => {
-          setZoom(mapEvents.getZoom())
-          console.log('zoomend: zoom ->', zoom)
-        }
+      zoomend: () => {
+        setZoom(mapEvents.getZoom())
+      }
     })
     
     return (
@@ -49,7 +48,7 @@ const Tracker = (props: Props) => {
           url={mapSettings.tilesURL.dark}
         />
         {drawBusRoutes()}
-        <MapElementsWithZoom />
+        <ScaledMapElements />
       </MapContainer>
     </div>
   )

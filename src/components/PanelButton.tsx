@@ -1,12 +1,10 @@
-const PanelButton = () => {
-  const togglePanel = () => {
-    // TO DO: refactor App to pass this as props.
-    const app = document.getElementById('app')
-    app?.classList.toggle('panel')
-  }
+interface Props {
+  onClick: () => void
+}
 
+const PanelButton = (props: Props) => {
   return (
-    <button id="panel-button" onClick={togglePanel}>
+    <button id="panel-button" onClick={props.onClick}>
       <img src="./gearIcon.svg" alt="panel" width="30" height="30" />
     </button>
   )

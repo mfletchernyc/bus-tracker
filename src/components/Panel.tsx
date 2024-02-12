@@ -39,15 +39,15 @@ const Panel = (props: Props) => {
 
     // MTA data gets weird sometimes.
     if (stop.OriginAimedDepartureTime) {
-      const departs = stop.MonitoredCall.ExpectedDepartureTime || stop.OriginAimedDepartureTime
+      const departureTime = stop.MonitoredCall.ExpectedDepartureTime || stop.OriginAimedDepartureTime
 
-      markup += `At terminal. Departs ${time(departs)}.`
+      markup += `At terminal. Departs ${time(departureTime)}.`
     } else {
       const status = stop.MonitoredCall.ArrivalProximityText
       const arrivalTime = stop.MonitoredCall?.ExpectedArrivalTime
-      const arrives = arrivalTime ? time(arrivalTime) : 'unknown'
+      const eta = arrivalTime ? time(arrivalTime) : 'unknown'
 
-      markup += `${status} (ETA ${arrives}).`
+      markup += `${status} (ETA ${eta}).`
     }
     
 
@@ -58,7 +58,7 @@ const Panel = (props: Props) => {
     <div className="stop-data">
       {
         Object.keys(stopSettings).map((stopId, i) =>
-          <>
+          <section key={`section${i}`}>
             <p className="stop-header" key={`header${i}`}>
               {stopSettings[stopId]?.name} ({stopSettings[stopId]?.route})
             </p>
@@ -73,7 +73,7 @@ const Panel = (props: Props) => {
                   )
                 : <span>🚫 No buses en route to this stop.</span>
             }
-          </>
+          </section>
         )
       }
     </div>

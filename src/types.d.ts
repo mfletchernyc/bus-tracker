@@ -1,6 +1,6 @@
 import { LatLngTuple } from 'leaflet'
 
-interface RouteSettings {
+export interface RouteSettings {
   [key: string]: {
     name: string
     color: string
@@ -9,7 +9,7 @@ interface RouteSettings {
   }
 }
 
-interface StopSettings {
+export interface StopSettings {
   [key: string]: {
     name: string
     position: LatLngTuple
@@ -19,7 +19,7 @@ interface StopSettings {
 
 // https://bustime.mta.info/wiki/Developers/SIRIVehicleMonitoring
 
-interface SiriRouteData {
+export interface SiriRouteData {
   contents: {
     Siri: {
       ServiceDelivery: {
@@ -34,11 +34,11 @@ interface VehicleMonitoringDelivery {
   VehicleActivity: VehicleActivity[]
 }
 
-interface VehicleActivity {
+export interface VehicleActivity {
   MonitoredVehicleJourney: MonitoredVehicleJourneyRoute
 }
 
-interface MonitoredVehicleJourneyRoute {
+export interface MonitoredVehicleJourneyRoute {
   Bearing: number
   PublishedLineName: string[]
   VehicleLocation: {
@@ -50,7 +50,7 @@ interface MonitoredVehicleJourneyRoute {
 
 // https://bustime.mta.info/wiki/Developers/SIRIStopMonitoring
 
-interface SiriStopData {
+export interface SiriStopData {
   contents: {
     Siri: {
       ServiceDelivery: {
@@ -61,15 +61,19 @@ interface SiriStopData {
   }
 }
 
+export interface StopsData {
+  [stopId: string]: SiriStopData
+}
+
 interface StopMonitoringDelivery {
   MonitoredStopVisit: MonitoredStopVisit[]
 }
 
-interface MonitoredStopVisit {
+export interface MonitoredStopVisit {
   MonitoredVehicleJourney: MonitoredVehicleJourneyStop
 }
 
-interface MonitoredVehicleJourneyStop {
+export interface MonitoredVehicleJourneyStop {
   MonitoredCall: {
     ArrivalProximityText: string
     ExpectedArrivalTime: string
@@ -78,14 +82,18 @@ interface MonitoredVehicleJourneyStop {
   VehicleRef: string
 }
 
-export {
-  BusesForOneStop,
-  MonitoredStopVisit,
-  MonitoredVehicleJourneyRoute,
-  MonitoredVehicleJourneyStop,
-  RouteSettings,
-  SiriRouteData,
-  SiriStopData,
-  StopSettings,
-  VehicleActivity
+export interface StopData {
+  PublishedLineName: string[]
+  VehicleRef: string
+  OriginAimedDepartureTime?: string
+  MonitoredCall: {
+    ExpectedDepartureTime?: string
+    ArrivalProximityText: string
+    ExpectedArrivalTime?: string
+  }
+}
+
+
+export interface BusesForAllStops {
+  [stopId: string]: MonitoredVehicleJourneyStop[]
 }

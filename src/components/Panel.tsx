@@ -1,11 +1,14 @@
 import { LatLngTuple } from 'leaflet'
 import stopSettings from '../settings/busStops'
 import time from '../utilities/convertISO8601ToTime'
+import {
+  BusesForAllStops,
+  StopData
+} from '../types'
 import '../styles/Panel.css'
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stops: any
+  stops: BusesForAllStops | undefined
   timestamp: string
   userPosition: LatLngTuple
   userPositionAccuracy: number
@@ -33,8 +36,7 @@ const Panel = (props: Props) => {
     terminal: OriginAimedDepartureTime
   */
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getFormattedStopData = (stop: any) => {
+  const getFormattedStopData = (stop: StopData) => {
     let markup = `${stop.PublishedLineName[0]} (${trimVehicleRef(stop.VehicleRef)}) `
 
     // MTA data gets weird sometimes.
@@ -64,14 +66,13 @@ const Panel = (props: Props) => {
             </p>
 
             {
-              stops[stopId]
-                ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  stops[stopId].map((stop: any, i: number) =>
-                    <span key={`bus${i}`}>
-                      🚌 → {getFormattedStopData(stop)}
-                    </span>
-                  )
-                : <span>🚫 No buses en route to this stop.</span>
+              stops?.[stopId]
+                ? stops[stopId].map((stop: StopData, i: number) =>
+                  <span key={`bus${i}`}>
+                    🚌 → {getFormattedStopData(stop)}
+                  </span>
+                )
+              : <span>🚫 No buses en route to this stop.</span>
             }
           </section>
         )

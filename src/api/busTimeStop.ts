@@ -5,9 +5,11 @@ import {
 } from '../settings/busTime'
 import proxyServer from '../settings/proxyServer'
 import {
+  BusesForAllStops,
   MonitoredStopVisit,
   MonitoredVehicleJourneyStop,
-  SiriStopData
+  SiriStopData,
+  StopsData
 } from '../types'
 
 // https://bustime.mta.info/wiki/Developers/SIRIStopMonitoring
@@ -37,10 +39,8 @@ const fetchBusesForOneStop = async (stopId: string) => {
 
 // TO DO: type
 const fetchBusesForAllStops = async () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const busesForAllStops: any = {} // MonitoredVehicleJourneyStop[] = []
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const stopsData: any = {}
+  const busesForAllStops: BusesForAllStops = {} // MonitoredVehicleJourneyStop[] = []
+  const stopsData: StopsData = {}
 
   for (const stopId in stopSettings) {
     const buses = await fetchBusesForOneStop(stopId)
@@ -48,10 +48,8 @@ const fetchBusesForAllStops = async () => {
   }
 
   for (const [stopId, stopData] of Object.entries(stopsData)) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const busesForThisStop: any = []
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const vehicles: MonitoredStopVisit[] = getVehicleActivity(<any>stopData)
+    const busesForThisStop: MonitoredVehicleJourneyStop[] = []
+    const vehicles: MonitoredStopVisit[] = getVehicleActivity(stopData)
 
     // Sometimes there are no buses, and StopMonitoringDelivery has no MonitoredStopVisit.
     // -> Unhandled Promise Rejection: TypeError: undefined is not an object (evaluating 'vehicles.map')

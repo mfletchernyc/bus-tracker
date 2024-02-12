@@ -1,30 +1,17 @@
 import { v4 as uuidv4 } from 'uuid'
 import routeSettings from '../settings/busRoutes'
-import {
-  busTimeLineRefPrefix,
-  busTimeVehicleMonitoringAPI
-} from '../settings/busTime'
+import { busTimeLineRefPrefix, busTimeVehicleMonitoringAPI } from '../settings/busTime'
 import proxyServer from '../settings/proxyServer'
 import time from '../utilities/convertISO8601ToTime'
-import {
-  MonitoredVehicleJourneyRoute,
-  SiriRouteData,
-  VehicleActivity
-} from '../types'
+import { MonitoredVehicleJourneyRoute, SiriRouteData, VehicleActivity } from '../types'
 
 // https://bustime.mta.info/wiki/Developers/SIRIVehicleMonitoring
 
-const getVehicleActivity = (
-  data: SiriRouteData
-): VehicleActivity[] => (
+const getVehicleActivity = (data: SiriRouteData): VehicleActivity[] =>
   data.contents?.Siri?.ServiceDelivery?.VehicleMonitoringDelivery[0]?.VehicleActivity
-)
 
-const getTimestamp = (
-  data: SiriRouteData
-): string => (
+const getTimestamp = (data: SiriRouteData): string =>
   time(data.contents?.Siri?.ServiceDelivery?.ResponseTimestamp) ?? ''
-)
 
 const fetchBusesForOneRoute = async (routeName: string) => {
   const encodedAPI = encodeURIComponent(
@@ -32,9 +19,7 @@ const fetchBusesForOneRoute = async (routeName: string) => {
   )
 
   const response = await fetch(`${proxyServer}${encodedAPI}`).catch((error) => {
-    throw new Error(
-      `Failed to fetch bus data for ${routeName}. ${error.message}`
-    )
+    throw new Error(`Failed to fetch bus data for ${routeName}. ${error.message}`)
   })
 
   const data: SiriRouteData = await response.json()

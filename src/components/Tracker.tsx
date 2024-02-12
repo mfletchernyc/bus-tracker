@@ -24,7 +24,7 @@ const Tracker = (props: Props) => {
         setZoom(mapEvents.getZoom())
       }
     })
-    
+
     return (
       <>
         {drawBusStops(zoom)}
@@ -40,13 +40,9 @@ const Tracker = (props: Props) => {
         center={mapSettings.center}
         zoom={mapSettings.zoom}
         zoomControl={false}
-        style={{ minHeight: "100vh", minWidth: "100vw" }}
-        
+        style={{ minHeight: '100vh', minWidth: '100vw' }}
       >
-        <TileLayer
-          attribution={mapSettings.attribution}
-          url={mapSettings.tilesURL.dark}
-        />
+        <TileLayer attribution={mapSettings.attribution} url={mapSettings.tilesURL.dark} />
         {drawBusRoutes()}
         <ScaledMapElements />
       </MapContainer>

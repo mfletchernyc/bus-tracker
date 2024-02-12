@@ -93,7 +93,6 @@ export interface StopData {
   }
 }
 
-
 export interface BusesForAllStops {
   [stopId: string]: MonitoredVehicleJourneyStop[]
 }

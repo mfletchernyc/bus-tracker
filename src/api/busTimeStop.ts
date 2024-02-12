@@ -1,45 +1,28 @@
 import { v4 as uuidv4 } from 'uuid'
 import stopSettings from '../settings/busStops'
-import {
-  busTimeStopMonitoringAPI
-} from '../settings/busTime'
+import { busTimeStopMonitoringAPI } from '../settings/busTime'
 import proxyServer from '../settings/proxyServer'
-import {
-  BusesForAllStops,
-  MonitoredStopVisit,
-  MonitoredVehicleJourneyStop,
-  SiriStopData,
-  StopsData
-} from '../types'
+import { BusesForAllStops, MonitoredStopVisit, MonitoredVehicleJourneyStop, SiriStopData, StopsData } from '../types'
 
 // https://bustime.mta.info/wiki/Developers/SIRIStopMonitoring
 
-const getVehicleActivity = (
-  data: SiriStopData
-): MonitoredStopVisit[] => (
+const getVehicleActivity = (data: SiriStopData): MonitoredStopVisit[] =>
   data.contents?.Siri?.ServiceDelivery?.StopMonitoringDelivery[0]?.MonitoredStopVisit
-)
 
 const fetchBusesForOneStop = async (stopId: string) => {
-  const encodedAPI = encodeURIComponent(
-    `${busTimeStopMonitoringAPI}${stopId}&nocache=${uuidv4()}`
-  )
+  const encodedAPI = encodeURIComponent(`${busTimeStopMonitoringAPI}${stopId}&nocache=${uuidv4()}`)
 
-  const response = await fetch(`${proxyServer}${encodedAPI}`)
-    .catch((error) => {
-      throw new Error(
-        `Failed to fetch stop data for ${stopId}. ${error.message}`
-      )
-    })
+  const response = await fetch(`${proxyServer}${encodedAPI}`).catch((error) => {
+    throw new Error(`Failed to fetch stop data for ${stopId}. ${error.message}`)
+  })
 
   const data: SiriStopData = await response.json()
 
   return data
 }
 
-// TO DO: type
 const fetchBusesForAllStops = async () => {
-  const busesForAllStops: BusesForAllStops = {} // MonitoredVehicleJourneyStop[] = []
+  const busesForAllStops: BusesForAllStops = {}
   const stopsData: StopsData = {}
 
   for (const stopId in stopSettings) {

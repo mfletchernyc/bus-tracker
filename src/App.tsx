@@ -5,10 +5,7 @@ import fetchBusesForAllStops from './api/busTimeStop'
 import Panel from './components/Panel'
 import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
-import {
-  BusesForAllStops,
-  MonitoredVehicleJourneyRoute
-} from './types'
+import { BusesForAllStops, MonitoredVehicleJourneyRoute } from './types'
 import './styles/App.css'
 
 interface BusData {
@@ -24,21 +21,19 @@ const App = () => {
   const [timestamp, setTimestamp] = useState<string>('')
 
   const [panelIsOpen, setPanelIsOpen] = useState(false)
-  
+
   const getBusesForRoutes = () => {
-    fetchBusesForAllRoutes()
-      .then((data: BusData) => {
-        const { buses, timestamp } = data
-        setBuses(buses)
-        setTimestamp(timestamp)
-      })
+    fetchBusesForAllRoutes().then((data: BusData) => {
+      const { buses, timestamp } = data
+      setBuses(buses)
+      setTimestamp(timestamp)
+    })
   }
 
   const getBusesForStops = () => {
-    fetchBusesForAllStops()
-      .then((data) => {
-        setStops(data)
-      })
+    fetchBusesForAllStops().then((data) => {
+      setStops(data)
+    })
   }
 
   const locateAndPositionUser = () => {
@@ -55,7 +50,7 @@ const App = () => {
     setPanelIsOpen(!panelIsOpen)
   }
 
-  const getPanelClass = () => panelIsOpen ? 'panel' : ''
+  const getPanelClass = () => (panelIsOpen ? 'panel' : '')
 
   useEffect(() => {
     getBusesForRoutes()
@@ -72,10 +67,7 @@ const App = () => {
   return (
     <div className="app-container">
       <div id="app" className={getPanelClass()}>
-        <Tracker
-          buses={buses}
-          userPosition={userPosition}
-        />
+        <Tracker buses={buses} userPosition={userPosition} />
         <Panel
           stops={stops}
           timestamp={timestamp}
@@ -83,7 +75,7 @@ const App = () => {
           userPositionAccuracy={userPositionAccuracy}
         />
       </div>
-      <PanelButton onClick={togglePanel}/>
+      <PanelButton onClick={togglePanel} />
     </div>
   )
 }

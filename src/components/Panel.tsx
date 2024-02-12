@@ -1,10 +1,7 @@
 import { LatLngTuple } from 'leaflet'
 import stopSettings from '../settings/busStops'
 import time from '../utilities/convertISO8601ToTime'
-import {
-  BusesForAllStops,
-  StopData
-} from '../types'
+import { BusesForAllStops, StopData } from '../types'
 import '../styles/Panel.css'
 
 interface Props {
@@ -17,16 +14,10 @@ interface Props {
 const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const Panel = (props: Props) => {
-  const {stops, timestamp, userPosition, userPositionAccuracy } = props
+  const { stops, timestamp, userPosition, userPositionAccuracy } = props
 
   const renderTimestamp = () => (
-    <p>
-      {
-        timestamp
-          ? `Bus data last fetched at ${timestamp}.`
-          : 'Error fetching timestamp.'
-      }
-    </p>
+    <p>{timestamp ? `Bus data last fetched at ${timestamp}.` : 'Error fetching timestamp.'}</p>
   )
 
   /*
@@ -51,40 +42,33 @@ const Panel = (props: Props) => {
 
       markup += `${status} (ETA ${eta}).`
     }
-    
 
     return markup
   }
 
   const renderBusesForStops = () => (
     <div className="stop-data">
-      {
-        Object.keys(stopSettings).map((stopId, i) =>
-          <section key={`section${i}`}>
-            <p className="stop-header" key={`header${i}`}>
-              {stopSettings[stopId]?.name} ({stopSettings[stopId]?.route})
-            </p>
+      {Object.keys(stopSettings).map((stopId, i) => (
+        <section key={`section${i}`}>
+          <p className="stop-header" key={`header${i}`}>
+            {stopSettings[stopId]?.name} ({stopSettings[stopId]?.route})
+          </p>
 
-            {
-              stops?.[stopId]
-                ? stops[stopId].map((stop: StopData, i: number) =>
-                  <span key={`bus${i}`}>
-                    🚌 → {getFormattedStopData(stop)}
-                  </span>
-                )
-              : <span>🚫 No buses en route to this stop.</span>
-            }
-          </section>
-        )
-      }
+          {stops?.[stopId] ? (
+            stops[stopId].map((stop: StopData, i: number) => (
+              <span key={`bus${i}`}>🚌 → {getFormattedStopData(stop)}</span>
+            ))
+          ) : (
+            <span>🚫 No buses en route to this stop.</span>
+          )}
+        </section>
+      ))}
     </div>
   )
 
   const renderUserPosition = () => (
     <p>
-      😐 → {userPosition[0].toFixed(4)}, {userPosition[1].toFixed(4)}
-      {' '}
-      (+/- {userPositionAccuracy.toFixed(1)} meters)
+      😐 → {userPosition[0].toFixed(4)}, {userPosition[1].toFixed(4)} (+/- {userPositionAccuracy.toFixed(1)} meters)
     </p>
   )
 
@@ -94,10 +78,7 @@ const Panel = (props: Props) => {
         <h1>bus-tracker</h1>
         {renderTimestamp()}
         {renderUserPosition()}
-        {stops
-          ? renderBusesForStops()
-          : <p>Waiting for bus data...</p>
-        }
+        {stops ? renderBusesForStops() : <p>Waiting for bus data...</p>}
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import BusIcon from '../icons/BusIcon'
 import NullIcon from '../icons/NullIcon'
+import routeSettings from '../settings/busRoutes'
 import stopSettings from '../settings/busStops'
 import time from '../utilities/convertISO8601ToTime'
 import { toggleStop } from '../utilities/togglePanelStops'
@@ -51,7 +52,8 @@ const Panel = (props: Props) => {
               {stops?.[stopId] ? (
                 stops[stopId].map((stop: StopData, i: number) => (
                   <span key={`bus${i}`}>
-                    <BusIcon color="#66aaffaa" /> → {getFormattedStopData(stop)}
+                    <BusIcon color={`${routeSettings[stop.PublishedLineName[0]].color}cc`} /> →{' '}
+                    {getFormattedStopData(stop)}
                   </span>
                 ))
               ) : (

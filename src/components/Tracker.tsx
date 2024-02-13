@@ -11,11 +11,12 @@ import 'leaflet/dist/leaflet.css'
 
 interface Props {
   buses: MonitoredVehicleJourneyRoute[] | undefined
+  openPanel: () => void
   userPosition: LatLngTuple
 }
 
 const Tracker = (props: Props) => {
-  const { buses, userPosition } = props
+  const { buses, openPanel, userPosition } = props
   const [zoom, setZoom] = useState(mapSettings.zoom)
 
   const ScaledMapElements = () => {
@@ -27,7 +28,7 @@ const Tracker = (props: Props) => {
 
     return (
       <>
-        {drawBusStops(zoom)}
+        {drawBusStops(openPanel, zoom)}
         {buses && drawBuses(buses, zoom)}
         {userPosition && drawUser(userPosition, zoom)}
       </>

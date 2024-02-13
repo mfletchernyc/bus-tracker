@@ -67,12 +67,8 @@ const App = () => {
   return (
     <div className="app-container">
       <div id="app" className={getPanelClass()}>
-        <Tracker buses={buses} userPosition={userPosition} />
-        <Panel
-          stops={stops}
-          timestamp={timestamp}
-          userPositionAccuracy={userPositionAccuracy}
-        />
+        <Tracker buses={buses} userPosition={userPosition} openPanel={togglePanel} />
+        <Panel stops={stops} timestamp={timestamp} userPositionAccuracy={userPositionAccuracy} />
       </div>
       <PanelButton onClick={togglePanel} />
     </div>

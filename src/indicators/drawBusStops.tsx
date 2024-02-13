@@ -1,13 +1,20 @@
 import { CircleMarker } from 'react-leaflet'
-import { v4 as uuidv4 } from 'uuid'
 import stopSettings from '../settings/busStops'
 import zoomToMarkerScale from '../utilities/getMarkerScale'
+import { collapseAllStops, toggleStop } from '../utilities/togglePanelStops'
 
-const drawBusStops = (zoom: number) =>
-  Object.values(stopSettings).map((stop) => (
+const showStopInfo = (openPanel: () => void, id: string) => {
+  openPanel()
+  collapseAllStops()
+  toggleStop(id)
+}
+
+const drawBusStops = (openPanel: () => void, zoom: number) =>
+  Object.keys(stopSettings).map((id) => (
     <CircleMarker
-      center={stop.position}
-      key={uuidv4()}
+      center={stopSettings[id].position}
+      eventHandlers={{ click: () => showStopInfo(openPanel, id) }}
+      key={id}
       pathOptions={{ color: '#0ba', opacity: 0.5, fillOpacity: 0.5 }}
       radius={5 * zoomToMarkerScale(zoom)}
     />

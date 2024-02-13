@@ -15,6 +15,10 @@ p {
   margin: 0 0 10px;
 }
 
+svg {
+  vertical-align: -1px;
+}
+
 .stop-data {
   max-height: 66.6%;
   overflow: auto;
@@ -28,11 +32,15 @@ p {
 .stop-header {
   cursor: pointer;
   font-weight: bold;
-  margin: 10px 0 0;
+  margin: 10px 0 2px;
 }
 
 .stop-header:first-child {
-  margin: 0;
+  margin-top: 0;
+}
+
+.stops {
+  margin: 0 0 10px;
 }
 
 /* keithjgrant.com/posts/2023/04/transitioning-to-height-auto/ */

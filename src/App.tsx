@@ -71,7 +71,6 @@ const App = () => {
         <Panel
           stops={stops}
           timestamp={timestamp}
-          userPosition={userPosition}
           userPositionAccuracy={userPositionAccuracy}
         />
       </div>

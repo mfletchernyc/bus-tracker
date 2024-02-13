@@ -1,3 +1,5 @@
+import GearIcon from '../icons/GearIcon'
+
 interface Props {
   onClick: () => void
 }
@@ -5,7 +7,7 @@ interface Props {
 const PanelButton = (props: Props) => {
   return (
     <button id="panel-button" onClick={props.onClick}>
-      <img src="./gearIcon.svg" alt="panel" width="30" height="30" />
+      <GearIcon color="#ddddddaa" />
     </button>
   )
 }

@@ -1,29 +1,25 @@
-import { LatLngTuple } from 'leaflet'
+import BusIcon from '../icons/BusIcon'
+import NullIcon from '../icons/NullIcon'
 import stopSettings from '../settings/busStops'
 import time from '../utilities/convertISO8601ToTime'
+import { toggleStop } from '../utilities/togglePanelStops'
 import { BusesForAllStops, StopData } from '../types'
 import '../styles/Panel.css'
 
 interface Props {
   stops: BusesForAllStops | undefined
   timestamp: string
-  userPosition: LatLngTuple
   userPositionAccuracy: number
 }
 
 const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const Panel = (props: Props) => {
-  const { stops, timestamp, userPosition, userPositionAccuracy } = props
+  const { stops, timestamp, userPositionAccuracy } = props
 
   const renderTimestamp = () => (
-    <p>{timestamp ? `Bus data last fetched at ${timestamp}.` : 'Error fetching timestamp.'}</p>
+    <span>{timestamp ? `Bus data fetched at ${timestamp}.` : 'Error fetching timestamp.'}</span>
   )
-
-  const toggleStop = (stopId: string) => {
-    const stop = document.getElementById(stopId)
-    stop?.classList.toggle('collapsed')
-  }
 
   const getFormattedStopData = (stop: StopData) => {
     let markup = `${stop.PublishedLineName[0]} (${trimVehicleRef(stop.VehicleRef)}) `
@@ -54,10 +50,14 @@ const Panel = (props: Props) => {
             <div className="stops">
               {stops?.[stopId] ? (
                 stops[stopId].map((stop: StopData, i: number) => (
-                  <span key={`bus${i}`}>🚌 → {getFormattedStopData(stop)}</span>
+                  <span key={`bus${i}`}>
+                    <BusIcon color="#66aaffaa" /> → {getFormattedStopData(stop)}
+                  </span>
                 ))
               ) : (
-                <span>🚫 No buses en route to this stop.</span>
+                <span>
+                  <NullIcon color="#cc0000aa" /> → No buses en route to this stop.
+                </span>
               )}
             </div>
           </div>
@@ -66,18 +66,15 @@ const Panel = (props: Props) => {
     </div>
   )
 
-  const renderUserPosition = () => (
-    <p>
-      😐 → {userPosition[0].toFixed(4)}, {userPosition[1].toFixed(4)} (+/- {userPositionAccuracy.toFixed(1)} meters)
-    </p>
-  )
+  const renderUserPosition = () => <span>User +/- {userPositionAccuracy.toFixed(1)} meters.</span>
 
   return (
     <div className="panel-container">
       <div className="panel">
         <h1>bus-tracker</h1>
-        {renderTimestamp()}
-        {renderUserPosition()}
+        <p>
+          {renderTimestamp()} {renderUserPosition()}
+        </p>
         {stops ? renderBusesForStops() : <p>Waiting for bus data...</p>}
       </div>
     </div>

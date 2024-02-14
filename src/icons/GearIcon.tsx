@@ -1,8 +1,6 @@
-interface Props {
-  color: string
-}
+import { IconProps } from '../types'
 
-const GearIcon = (props: Props) => {
+const GearIcon = (props: IconProps) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30">
       <path

@@ -1,10 +1,7 @@
 import GearIcon from '../icons/GearIcon'
+import { ButtonProps } from '../types'
 
-interface Props {
-  onClick: () => void
-}
-
-const PanelButton = (props: Props) => {
+const PanelButton = (props: ButtonProps) => {
   return (
     <button className="button panel-button" onClick={props.onClick}>
       <GearIcon color="#ddddddaa" />

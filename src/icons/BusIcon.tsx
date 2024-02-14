@@ -1,8 +1,6 @@
-interface Props {
-  color: string
-}
+import { IconProps } from '../types'
 
-const BusIcon = (props: Props) => {
+const BusIcon = (props: IconProps) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 12" width="19" height="12">
       <ellipse fill={props.color} cx="3.8" cy="10.1" rx="1.9" ry="1.9" />

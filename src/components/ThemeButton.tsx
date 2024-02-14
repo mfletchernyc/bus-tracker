@@ -1,10 +1,7 @@
 import ThemeIcon from '../icons/ThemeIcon'
+import { ButtonProps } from '../types'
 
-interface Props {
-  onClick: () => void
-}
-
-const ThemeButton = (props: Props) => {
+const ThemeButton = (props: ButtonProps) => {
   return (
     <button className="button theme-button" onClick={props.onClick}>
       <ThemeIcon />

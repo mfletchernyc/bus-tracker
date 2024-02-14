@@ -2,6 +2,14 @@ import { LatLngTuple } from 'leaflet'
 
 export type Theme = 'dark' | 'light'
 
+export interface IconProps {
+  color: string
+}
+
+export interface ButtonProps {
+  onClick: () => void
+}
+
 export interface RouteSettings {
   [key: string]: {
     name: string

@@ -21,16 +21,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --dark-background: #13151a;
+  --dark-color: #ccc;
+  --light-background: #c6cddd;
+  --light-color: #000;
 }
 
-/*
-  TO DO: light and dark theme colors should be variables.
-  For reference: #13151a/#ccc and #c6cddd/#000.
-*/
-
 .app-container {
-  background-color: #13151a;
-  color: #ccc;
+  background-color: var(--dark-background);
+  color: var(--dark-color);
   height: 100%;
   overflow: hidden;
   position: relative;
@@ -39,8 +38,8 @@ body {
 }
 
 .app-container.light {
-  background: #c6cddd;
-  color: #000;
+  background: var(--light-background);
+  color: var(--light-color);
 }
 
 #app {
@@ -62,8 +61,8 @@ body {
 }
 
 .button {
-  background: #13151a88;
-  border: 2px solid #cccccc33;
+  background: rgb(from var(--dark-background) r g b / 50%);
+  border: 2px solid rgb(from var(--dark-color) r g b / 20%);
   border-radius: 10px;
   bottom: 20px;
   height: 45px;

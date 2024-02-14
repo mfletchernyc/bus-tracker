@@ -1,13 +1,13 @@
 /* Styling third-party things. */
 
 #root .leaflet-container {
-  background: #13151a;
-  color: #fff;
+  background: var(--dark-background);
+  color: var(--dark-color);
 }
 
 #root .light .leaflet-container {
-  background: #c6cddd;
-  color: #000;
+  background: var(--light-background);
+  color: var(--light-color);
 }
 
 #root .leaflet-container .leaflet-control-attribution {
@@ -15,11 +15,11 @@
 }
 
 #root .leaflet-container .leaflet-control-attribution {
-  background: #13151aaa;
+  background: rgb(from var(--dark-background) r g b / 50%);
 }
 
 #root .light .leaflet-container .leaflet-control-attribution {
-  background: #c6cdddaa;
+  background: rgb(from var(--light-background) r g b / 50%);
 }
 
 #root .leaflet-container .leaflet-control-attribution a {

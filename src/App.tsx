@@ -5,7 +5,7 @@ import fetchBusesForAllStops from './api/busTimeStop'
 import Panel from './components/Panel'
 import PanelButton from './components/PanelButton'
 import Tracker from './components/Tracker'
-import { BusesForAllStops, MonitoredVehicleJourneyRoute } from './types'
+import { BusesForAllStops, MonitoredVehicleJourneyRoute, Theme } from './types'
 import './styles/App.css'
 
 interface BusData {
@@ -14,13 +14,24 @@ interface BusData {
 }
 
 const App = () => {
+  const [theme, setTheme] = useState<Theme>('dark')
+  const [panelIsOpen, setPanelIsOpen] = useState(false)
+
   const [buses, setBuses] = useState<MonitoredVehicleJourneyRoute[]>()
   const [stops, setStops] = useState<BusesForAllStops>()
   const [userPosition, setUserPosition] = useState<LatLngTuple>([0, 0])
   const [userPositionAccuracy, setUserPositionAccuracy] = useState(0)
   const [timestamp, setTimestamp] = useState<string>('')
 
-  const [panelIsOpen, setPanelIsOpen] = useState(false)
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  const togglePanel = () => {
+    setPanelIsOpen(!panelIsOpen)
+  }
+
+  const getPanelClass = () => (panelIsOpen ? 'panel' : '')
 
   const getBusesForRoutes = () => {
     fetchBusesForAllRoutes().then((data: BusData) => {
@@ -46,12 +57,6 @@ const App = () => {
     navigator.geolocation.getCurrentPosition(doGeolocation)
   }
 
-  const togglePanel = () => {
-    setPanelIsOpen(!panelIsOpen)
-  }
-
-  const getPanelClass = () => (panelIsOpen ? 'panel' : '')
-
   useEffect(() => {
     getBusesForRoutes()
     locateAndPositionUser()
@@ -65,10 +70,15 @@ const App = () => {
   }, [])
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${theme}`}>
       <div id="app" className={getPanelClass()}>
-        <Tracker buses={buses} userPosition={userPosition} openPanel={togglePanel} />
-        <Panel stops={stops} timestamp={timestamp} userPositionAccuracy={userPositionAccuracy} />
+        <Tracker buses={buses} userPosition={userPosition} openPanel={togglePanel} theme={theme} />
+        <Panel
+          stops={stops}
+          toggleTheme={toggleTheme}
+          timestamp={timestamp}
+          userPositionAccuracy={userPositionAccuracy}
+        />
       </div>
       <PanelButton onClick={togglePanel} />
     </div>

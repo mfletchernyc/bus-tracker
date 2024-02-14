@@ -1,3 +1,4 @@
+import ThemeButton from './ThemeButton'
 import BusIcon from '../icons/BusIcon'
 import NullIcon from '../icons/NullIcon'
 import routeSettings from '../settings/busRoutes'
@@ -10,13 +11,14 @@ import '../styles/Panel.css'
 interface Props {
   stops: BusesForAllStops | undefined
   timestamp: string
+  toggleTheme: () => void
   userPositionAccuracy: number
 }
 
 const trimVehicleRef = (ref: string) => ref.split('_')[1]
 
 const Panel = (props: Props) => {
-  const { stops, timestamp, userPositionAccuracy } = props
+  const { stops, timestamp, toggleTheme, userPositionAccuracy } = props
 
   const renderTimestamp = () => (
     <span>{timestamp ? `Bus data fetched at ${timestamp}.` : 'Error fetching timestamp.'}</span>
@@ -52,13 +54,13 @@ const Panel = (props: Props) => {
               {stops?.[stopId] ? (
                 stops[stopId].map((stop: StopData, i: number) => (
                   <span key={`bus${i}`}>
-                    <BusIcon color={`${routeSettings[stop.PublishedLineName[0]].color}cc`} /> →{' '}
+                    <BusIcon color={`${routeSettings[stop.PublishedLineName[0]].color}`} /> →{' '}
                     {getFormattedStopData(stop)}
                   </span>
                 ))
               ) : (
                 <span>
-                  <NullIcon color="#cc0000aa" /> → No buses en route to this stop.
+                  <NullIcon color="#cc0000" /> → No buses en route to this stop.
                 </span>
               )}
             </div>
@@ -79,6 +81,7 @@ const Panel = (props: Props) => {
         </p>
         {stops ? renderBusesForStops() : <p>Waiting for bus data...</p>}
       </div>
+      <ThemeButton onClick={() => toggleTheme()} />
     </div>
   )
 }

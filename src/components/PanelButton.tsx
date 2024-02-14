@@ -6,7 +6,7 @@ interface Props {
 
 const PanelButton = (props: Props) => {
   return (
-    <button id="panel-button" onClick={props.onClick}>
+    <button className="button panel-button" onClick={props.onClick}>
       <GearIcon color="#ddddddaa" />
     </button>
   )

@@ -7,7 +7,7 @@
 }
 
 h1 {
-  margin: 0 0 10px;
+  margin: 0 0 5px;
 }
 
 p {
@@ -15,8 +15,8 @@ p {
   margin: 0 0 10px;
 }
 
-svg {
-  vertical-align: -1px;
+.theme-button {
+  right: 20px;
 }
 
 .stop-data {
@@ -27,6 +27,10 @@ svg {
 .stop-data span {
   display: block;
   line-height: 1.33;
+}
+
+.stop-data svg {
+  vertical-align: -1px;
 }
 
 .stop-header {

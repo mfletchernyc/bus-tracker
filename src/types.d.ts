@@ -1,5 +1,7 @@
 import { LatLngTuple } from 'leaflet'
 
+export type Theme = 'dark' | 'light'
+
 export interface RouteSettings {
   [key: string]: {
     name: string

@@ -3,7 +3,6 @@
 
 html,
 body {
-  background-color: #13151a;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -12,7 +11,6 @@ body {
 
 #root {
   align-items: center;
-  color: #ccc;
   display: flex;
   font-family: 'Pragati Narrow', sans-serif;
   font-synthesis: none;
@@ -25,11 +23,24 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/*
+  TO DO: light and dark theme colors should be variables.
+  For reference: #13151a/#ccc and #c6cddd/#000.
+*/
+
 .app-container {
+  background-color: #13151a;
+  color: #ccc;
   height: 100%;
   overflow: hidden;
   position: relative;
+  transition: all 0.25s;
   width: 100%;
+}
+
+.app-container.light {
+  background: #c6cddd;
+  color: #000;
 }
 
 #app {
@@ -50,15 +61,22 @@ body {
   width: 50%;
 }
 
-#panel-button {
-  background: #13151aaa;
-  border: 0;
+.button {
+  background: #13151a88;
+  border: 2px solid #cccccc33;
   border-radius: 10px;
   bottom: 20px;
   height: 45px;
-  left: 20px;
   padding: 0;
   position: absolute;
   width: 45px;
   z-index: 9;
+}
+
+.button svg {
+  vertical-align: middle;
+}
+
+.panel-button {
+  left: 20px;
 }

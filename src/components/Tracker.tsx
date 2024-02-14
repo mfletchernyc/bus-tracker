@@ -5,19 +5,20 @@ import drawBuses from '../indicators/drawBuses'
 import drawBusRoutes from '../indicators/drawBusRoutes'
 import drawBusStops from '../indicators/drawBusStops'
 import drawUser from '../indicators/drawUser'
-import mapSettings from '../settings/map'
-import { MonitoredVehicleJourneyRoute } from '../types'
+import { attribution, defaultCenter, defaultZoom, tilesURL } from '../settings/map'
+import { MonitoredVehicleJourneyRoute, Theme } from '../types'
 import 'leaflet/dist/leaflet.css'
 
 interface Props {
   buses: MonitoredVehicleJourneyRoute[] | undefined
   openPanel: () => void
+  theme: Theme
   userPosition: LatLngTuple
 }
 
 const Tracker = (props: Props) => {
-  const { buses, openPanel, userPosition } = props
-  const [zoom, setZoom] = useState(mapSettings.zoom)
+  const { buses, openPanel, theme, userPosition } = props
+  const [zoom, setZoom] = useState(defaultZoom)
 
   const ScaledMapElements = () => {
     const mapEvents = useMapEvents({
@@ -38,12 +39,12 @@ const Tracker = (props: Props) => {
   return (
     <div className="map-container">
       <MapContainer
-        center={mapSettings.center}
-        zoom={mapSettings.zoom}
+        center={defaultCenter}
+        zoom={defaultZoom}
         zoomControl={false}
         style={{ minHeight: '100vh', minWidth: '100vw' }}
       >
-        <TileLayer attribution={mapSettings.attribution} url={mapSettings.tilesURL.dark} />
+        <TileLayer attribution={attribution} url={tilesURL(theme)} />
         {drawBusRoutes()}
         <ScaledMapElements />
       </MapContainer>

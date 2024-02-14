@@ -23,9 +23,9 @@
 }
 
 #root .leaflet-container .leaflet-control-attribution a {
-  color: #ddd;
+  color: rgb(from var(--dark-color) r g b / 80%);
 }
 
 #root .light .leaflet-container .leaflet-control-attribution a {
-  color: #222;
+  color: rgb(from var(--light-color) r g b / 80%);
 }

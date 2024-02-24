@@ -1,7 +1,7 @@
 name: Deploy Bus Tracker on push 🚌
 
 on:
-  push:
+  [workflow_dispatch, push]:
     branches:
       - main
 

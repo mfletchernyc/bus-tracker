@@ -9,7 +9,6 @@ jobs:
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
     - name: Get latest code
@@ -20,6 +19,9 @@ jobs:
       
     - name: Build
       run: npm run build
+      env:
+        VITE_BUS_TRACKER_BUS_TIME_API_KEY: ${{ secrets.VITE_BUS_TRACKER_BUS_TIME_API_KEY }}
+        VITE_BUS_TRACKER_MAPBOX_TOKEN: ${{ secrets.VITE_BUS_TRACKER_MAPBOX_TOKEN }}
 
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4

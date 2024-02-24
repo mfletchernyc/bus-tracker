@@ -1,0 +1,24 @@
+name: Deploy Bus Tracker on push 🚌
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v3
+
+    - name: Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: 217.196.54.199
+        username: u416621194
+        password: ${{ secrets.sftp_password }}
+        port: 65002
+        local-dir: dist/
+        server-dir: domains/fletcher.nyc/public_html/etc/bus-tracker/

@@ -16,7 +16,7 @@ const routeSettings: RouteSettings = {
   },
   B48: {
     name: 'B48',
-    color: '#a4c215',
+    color: '#aaaa00',
     lineRef: 'MTA%20NYCT_B48',
     path: B48geography
   },

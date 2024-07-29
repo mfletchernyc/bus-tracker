@@ -23,12 +23,6 @@ These shuttles are barely being handled. Need to add map data for this route.
 
 Need to handle changes like this better.
 
-## service alert for B48
-
-<s>B48 stops along Lorimer St between Grand St and Meeker Ave are closed.</s>
-
-Construction at the Lorimer Street L Station is complete. Map data needs to be restored.
-
 ## local use
 
 - Clone this repo.

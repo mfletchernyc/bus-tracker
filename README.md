@@ -13,11 +13,21 @@ Personal NYC MTA bus tracker for the Greenpoint neighborhood of Brooklyn.
 - [Mapbox Studio](https://studio.mapbox.com)
 - [QGIS](https://qgis.org/)
 
+## active alert for the G train
+
+No G between Bedford-Nostrand Avs, Brooklyn and Court Sq, Queens Until 8:30 PM Sunday, Aug 11
+G runs between Church Av and Bedford-Nostrand Avs, the last stop.
+Free B98 shuttle buses make stops between Bedford-Nostrand Avs and Court Sq.
+
+These shuttles are barely being handled. Need to add map data for this route.
+
+Need to handle changes like this better.
+
 ## service alert for B48
 
-B48 stops along Lorimer St between Grand St and Meeker Ave are closed.
+<s>B48 stops along Lorimer St between Grand St and Meeker Ave are closed.</s>
 
-Map data will need to be updated when the construction at the Lorimer Street L Station is complete.
+Construction at the Lorimer Street L Station is complete. Map data needs to be restored.
 
 ## local use
 

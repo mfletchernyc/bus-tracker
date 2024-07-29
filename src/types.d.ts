@@ -15,7 +15,8 @@ export interface RouteSettings {
     name: string
     color: string
     lineRef: string
-    path: object
+    // TO DO: B98 geography
+    path?: object
   }
 }
 

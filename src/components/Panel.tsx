@@ -46,7 +46,10 @@ const Panel = (props: Props) => {
       {Object.keys(stopSettings).map((stopId, i) => (
         <section id={stopId} key={`section${i}`}>
           <p className="stop-header" key={`header${i}`} onClick={() => toggleStop(stopId)}>
-            {stopSettings[stopId]?.name} ({stopSettings[stopId]?.route})
+            {stopSettings[stopId]?.name}{' '}
+            <span>
+              ({stopSettings[stopId]?.route} #{stopId})
+            </span>
           </p>
 
           <div className="stops-animation">

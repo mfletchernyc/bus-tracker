@@ -39,6 +39,11 @@ p {
   margin: 10px 0 2px;
 }
 
+.stop-header span {
+  display: inline;
+  font-weight: normal;
+}
+
 .stop-header:first-child {
   margin-top: 0;
 }

@@ -25,6 +25,13 @@ const routeSettings: RouteSettings = {
     color: '#cc6600',
     lineRef: 'MTA%20NYCT_B62',
     path: B62geography
+  },
+  // G TRAIN SHUTTLE
+  B98: {
+    name: 'B98',
+    color: '#6cbe45',
+    lineRef: 'MTA%20NYCT_B98'
+    // path: B62geography
   }
 }
 
